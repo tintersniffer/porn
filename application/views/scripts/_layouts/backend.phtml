@@ -1,0 +1,54 @@
+<?php
+/* @var $layoutManager My\Manager\MyLayoutManager */
+$layoutManager = $this->layoutManager;
+$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="Mapkuff">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<?php echo $layoutManager->getTitle()?>
+<?php echo $layoutManager->getDescription()?>
+<?php echo $layoutManager->getKeyword()?>
+<?php echo $layoutManager->getRobot()?>
+
+
+<link href="<?php echo $baseUrl;?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="<?php echo $baseUrl;?>/bootstrap/css/non-responsive.css" rel="stylesheet" />
+<link href="<?php echo $baseUrl;?>/css/prettyPhoto.css" rel="stylesheet" />
+<?php echo $layoutManager->getAdditionalCssString()?>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="<?php echo $baseUrl;?>/js/html5shiv.js"></script>
+<script src="<?php echo $baseUrl;?>/js/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<script src="<?php echo $baseUrl;?>/js/documentReady.js"></script>
+<?php echo $layoutManager->_view->render('/_global/backend_navbar.phtml'); ?>
+<?php echo $layoutManager->getContent(); ?>
+<script src="<?php echo $baseUrl;?>/js/jquery.js"></script>
+<script src="<?php echo $baseUrl;?>/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo $baseUrl;?>/js/prettyPhoto.js"></script>
+<?php echo $layoutManager->getAdditionalJavascriptString()?>
+<?php echo $layoutManager->getContentScript(); ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	documentReady.forEach(function(entry){
+		if(typeof entry == 'function'){
+			entry();
+		}
+
+		if($('.prettyphoto')[0]){
+			$('.prettyphoto').prettyPhoto();			
+		}
+	});
+});
+</script>
+</body>
+</html>
