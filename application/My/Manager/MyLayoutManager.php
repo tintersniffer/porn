@@ -1,7 +1,6 @@
 <?php
 namespace My\Manager;
 
-use My\Services\MyCache;
 class MyLayoutManager {
 
 	private $_defaultTitle = '<title>ยินดีต้อนรับเข้าสู่ Bangkok5 Swim</title>';
@@ -27,17 +26,19 @@ class MyLayoutManager {
 	public static function getInstance() {
 
 		if (null === self::$_instance) {
-			$id = 'Amazon-Layout-Manager';
-			$cache = MyCache::getInstance();
-			if ($cache->contains($id)) {
-				static::$_instance = $cache->fetch($id);
-			} else {
-				static::$_instance = new static;
-				$baseDir = realpath(APPLICATION_PATH . '/views');
-				static::$_instance->_view = new \Zend_View(array('basePath' => $baseDir));
-				$cache->save($id, static::$_instance, 3600);
-			}
-
+// 			$id = 'Amazon-Layout-Manager';
+// 			$cache = MyCache::getInstance();
+// 			if ($cache->contains($id)) {
+// 				static::$_instance = $cache->fetch($id);
+// 			} else {
+// 				static::$_instance = new static;
+// 				$baseDir = realpath(APPLICATION_PATH . '/views');
+// 				static::$_instance->_view = new \Zend_View(array('basePath' => $baseDir));
+// 				$cache->save($id, static::$_instance, 3600);
+// 			}
+			static::$_instance = new static;
+			$baseDir = realpath(APPLICATION_PATH . '/views');
+			static::$_instance->_view = new \Zend_View(array('basePath' => $baseDir));
 		}
 		return static::$_instance;
 	}

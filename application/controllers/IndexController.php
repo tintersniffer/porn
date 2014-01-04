@@ -1,5 +1,6 @@
 <?php
 
+use My\Factory\MyEntityManagerFactory;
 class IndexController extends Zend_Controller_Action
 {
 
@@ -11,6 +12,7 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
+        MyEntityManagerFactory::getEntityManager();
     }
 
 
