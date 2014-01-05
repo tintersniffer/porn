@@ -53,6 +53,8 @@ class MyEntityManagerFactory{
 						if($con->isTransactionActive()){
 							$em->flush();
 							$con->commit();
+						}else{
+							break;
 						}						
 					}catch(\Exception $e){
 						break;
