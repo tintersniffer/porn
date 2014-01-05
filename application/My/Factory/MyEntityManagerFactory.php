@@ -45,12 +45,20 @@ class MyEntityManagerFactory{
 			/**
 				flush update before shutdown
 			 */
-// 			$beforeShutdownFunction = function(){
-// 				MyEntityManagerFactory::getEntityManager()->flush();
-// 			};
-// 			register_shutdown_function($beforeShutdownFunction);
+			$beforeShutdownFunction = function(){
+				$em = MyEntityManagerFactory::getEntityManager();
+				while(true){
+					try{
+						MyEntityManagerFactory::getEntityManager()->commit();
+					}catch(\Exception $e){
+						break;
+					}
+				}
+				
+ 			};
+ 			register_shutdown_function($beforeShutdownFunction);
 			
-// 			self::$em->getConnection()->connect();
+ 			self::$em->getConnection()->connect();
 		}
 		return self::$em;
 	}
