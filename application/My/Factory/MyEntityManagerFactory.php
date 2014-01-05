@@ -36,7 +36,7 @@ class MyEntityManagerFactory{
 			if(static::$isUpdateSchema){
 				$schemaTool = new SchemaTool(self::$em);
 				$classes = self::$em->getMetadataFactory()->getAllMetadata();
-// 				$schemaTool->updateSchema($classes);
+				$schemaTool->updateSchema($classes);
 // 				$schemaTool->dropSchema($classes);
 // 				$schemaTool->createSchema($classes);
 			}
@@ -49,7 +49,11 @@ class MyEntityManagerFactory{
 				$em = MyEntityManagerFactory::getEntityManager();
 				while(true){
 					try{
-						MyEntityManagerFactory::getEntityManager()->commit();
+						$con = $em->getConnection();
+						if($con->isTransactionActive()){
+							$em->flush();
+							$con->commit();
+						}						
 					}catch(\Exception $e){
 						break;
 					}
