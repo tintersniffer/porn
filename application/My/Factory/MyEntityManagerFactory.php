@@ -16,28 +16,41 @@ use Doctrine\ORM\Tools\SchemaTool;
 
 class MyEntityManagerFactory{
 	
-	public static $isCreateSchema = true;
+	public static $isUpdateSchema = false;
 	
+	/**
+	 * 
+	 * @var EntityManager
+	 */
 	private static $em=null;
+	
+	/**
+	 * 
+	 * @return \Doctrine\ORM\EntityManager
+	 */
 	public static function getEntityManager(){			
 		if(null === static::$em){
 			$cache = MyCache::getInstance();
 			self::$em = self::createNewEntityManager();
 			
-			if($isCreateSchema){
+			if(static::$isUpdateSchema){
 				$schemaTool = new SchemaTool(self::$em);
 				$classes = self::$em->getMetadataFactory()->getAllMetadata();
-				$schemaTool->createSchema($classes);
+// 				$schemaTool->updateSchema($classes);
+// 				$schemaTool->dropSchema($classes);
+// 				$schemaTool->createSchema($classes);
 			}
 			
 			
 			/**
 				flush update before shutdown
 			 */
-			$beforeShutdownFunction = function(){
-				MyEntityManagerFactory::getEntityManager()->flush();
-			};
-			register_shutdown_function($beforeShutdownFunction);
+// 			$beforeShutdownFunction = function(){
+// 				MyEntityManagerFactory::getEntityManager()->flush();
+// 			};
+// 			register_shutdown_function($beforeShutdownFunction);
+			
+// 			self::$em->getConnection()->connect();
 		}
 		return self::$em;
 	}
@@ -53,8 +66,7 @@ class MyEntityManagerFactory{
 		$config->setMetadataCacheImpl(MyCache::getInstance("_doctrine_metadata")->getCacheImplement());
 		$config->setQueryCacheImpl(MyCache::getInstance("_doctrine_query_cache")->getCacheImplement());
 		$config->setResultCacheImpl(MyCache::getInstance("_doctrine_result_cache")->getCacheImplement());
-		$config->setHydrationCacheImpl(MyCache::getInstance("_doctrine_hydration_cache")->getCacheImplement());	
-		
+		$config->setHydrationCacheImpl(MyCache::getInstance("_doctrine_hydration_cache")->getCacheImplement());
 		$config->setProxyDir(APPLICATION_PATH.'/Models/Proxies/__CG__/Models/Entities2');
 		$config->setProxyNamespace('Models\\Proxies\\');		
 		

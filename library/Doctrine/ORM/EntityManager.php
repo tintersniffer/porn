@@ -29,6 +29,7 @@ use Exception,
     Doctrine\ORM\Query\ResultSetMapping,
     Doctrine\ORM\Proxy\ProxyFactory,
     Doctrine\ORM\Query\FilterCollection;
+use Models\AbstractRepository;
 
 /**
  * The EntityManager is the central access point to ORM functionality.
@@ -669,7 +670,7 @@ class EntityManager implements ObjectManager
      * Gets the repository for an entity class.
      *
      * @param string $entityName The name of the entity.
-     * @return EntityRepository The repository class.
+     * @return AbstractRepository The repository class.
      */
     public function getRepository($entityName)
     {

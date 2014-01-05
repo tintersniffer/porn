@@ -1,6 +1,10 @@
 <?php
 
 use My\Factory\MyEntityManagerFactory;
+use Models\Repositories\MovieRepository;
+use My\Manager\TransactionManager;
+use Models\Services\UserService;
+use Models\Services\BackendManagementService;
 class IndexController extends Zend_Controller_Action
 {
 
@@ -11,9 +15,16 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
-        MyEntityManagerFactory::getEntityManager();
+    	$repo = MyEntityManagerFactory::getEntityManager()->getRepository("User");    
+    	$repo->findAll();
+    	
+    	$bmService = BackendManagementService::getInstance();
     }
+    
+    public function testAction(){
+    	throw new Exception();
+    }
+    
 
 
 }

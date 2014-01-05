@@ -9,7 +9,7 @@ namespace Models\Entities;
 Class Server
 {
 	/** @Id
-	 * @Column(name="server_id", type="integer")
+	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
 	protected  $id;
 	

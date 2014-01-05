@@ -1,0 +1,61 @@
+<?php 
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+	$fullBaseUrl = "http://$_SERVER[HTTP_HOST]$baseUrl";
+?>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" 
+style="margin-bottom: 0px; background-color: #ecf0f1; color: #ecf0f1;">
+	<div class="container">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" id="nv">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand navlink" data-index="1" href="<?php echo "$fullBaseUrl/home";?>" style="padding: 5px;">
+    	<img alt="" src="<?php echo "$baseUrl/images/bangkok_swim.png"?>" style="height: 40px;">
+    </a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li class=""><a class="navlink" data-index="2" href="<?php echo "$fullBaseUrl/about-us";?>">เกี่ยวกับเรา</a></li>
+      <li class=""><a class="navlink" data-index="3" href="<?php echo "$fullBaseUrl/competitions";?>">การแข่งขัน</a></li>
+      <!--  
+      <li class="dropdown autodropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">ระบบสมาชิก<b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="<?php echo "$baseUrl/member";?>"><span class="glyphicon glyphicon-user"></span> &nbsp;สำหรับนักกีฬา</a></li>
+                <li><a href="<?php echo "$baseUrl/club";?>"><span class="glyphicon glyphicon-home"></span> &nbsp;สำหรับสโมสร</a></li>
+              </ul>
+            </li> 
+      -->
+      <li class=""><a class="navlink" data-index="4" href="<?php echo "$fullBaseUrl/statistics";?>">สถิติ</a></li>  
+      <li class=""><a class="navlink" data-index="5" href="<?php echo "$fullBaseUrl/contact-us";?>">ติดต่อเรา</a></li>  
+      <li class="dropdown autodropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">สินค้าและบริการ<b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="http://bangkok5swim.com/forum/index.php?board=7.0">อุปกรณ์การว่ายน้ำ</a></li>
+                <li><a href="http://bangkok5swim.com/forum/index.php?board=8.0">พื้นที่ขายของ</a></li>
+              </ul>
+            </li>
+       <li class="dropdown autodropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">บทความ<b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="http://bangkok5swim.com/forum/index.php?board=2.0"><span class="glyphicon glyphicon-cutlery"></span> &nbsp;อาหารเพื่อการว่ายน้ำ</a></li>
+                <li><a href="http://bangkok5swim.com/forum/index.php?board=3.0"><span class="glyphicon glyphicon-heart"></span> &nbsp;การฝึกฝนร่างกาย</a></li>
+                <li><a href="http://bangkok5swim.com/forum/index.php?board=4.0"><span class="glyphicon glyphicon-pushpin"></span> &nbsp;tips &amp; techniques</a></li>
+                <li role="presentation" class="divider"></li>
+                <li><a href="http://bangkok5swim.com/forum/index.php?board=5.0"><span class="glyphicon glyphicon-bullhorn"></span> &nbsp;ข่าวสารต่างๆ</a></li>
+              </ul>
+            </li>
+            
+       <li class=""><a href="http://bangkok5swim.com/forum/index.php?board=1.0" data-type="nav-top-menu">ประมวลภาพ</a></li>
+       <li class=""><a href="http://bangkok5swim.com/forum" data-type="nav-top-menu">ฟอรั่ม</a></li>
+    </ul>
+    
+  </div><!-- /.navbar-collapse -->
+  </div>
+</nav>

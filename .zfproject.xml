@@ -11,6 +11,29 @@
           <actionMethod actionName="index"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
+        <controllerFile controllerName="Manage">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="servers"/>
+          <actionMethod actionName="movies"/>
+          <actionMethod actionName="serverDetail"/>
+          <actionMethod actionName="movieDetail"/>
+          <actionMethod actionName="login"/>
+        </controllerFile>
+        <controllerFile controllerName="DoManage">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="movieUpdate"/>
+          <actionMethod actionName="movieCreate"/>
+          <actionMethod actionName="movieDelete"/>
+          <actionMethod actionName="serverCreate"/>
+          <actionMethod actionName="serverUpdate"/>
+          <actionMethod actionName="serverDelete"/>
+        </controllerFile>
+        <controllerFile controllerName="ManageProcessor">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="MovieController">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
       <layoutsDirectory enabled="false"/>
@@ -24,6 +47,51 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Error">
             <viewScriptFile forActionName="error"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Manage">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Manage">
+            <viewScriptFile forActionName="servers"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Manage">
+            <viewScriptFile forActionName="movies"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Manage">
+            <viewScriptFile forActionName="serverDetail"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Manage">
+            <viewScriptFile forActionName="movieDetail"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="movieUpdate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="movieCreate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="movieDelete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="serverCreate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="serverUpdate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="DoManage">
+            <viewScriptFile forActionName="serverDelete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Manage">
+            <viewScriptFile forActionName="login"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="ManageProcessor">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="MovieController">
+            <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

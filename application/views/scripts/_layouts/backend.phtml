@@ -30,8 +30,18 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
 <body>
 <script src="<?php echo $baseUrl;?>/js/documentReady.js"></script>
+
+
+
+
 <?php echo $layoutManager->_view->render('/_global/backend_navbar.phtml'); ?>
+<div class="container">
 <?php echo $layoutManager->getContent(); ?>
+</div>
+
+
+
+
 <script src="<?php echo $baseUrl;?>/js/jquery.js"></script>
 <script src="<?php echo $baseUrl;?>/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo $baseUrl;?>/js/prettyPhoto.js"></script>

@@ -1,0 +1,11 @@
+<?php 
+	echo $this->render('_global/navbar.phtml');
+?>
+
+<script>
+	addDocumentReady(function(){
+		$('.navlink').each(function(){
+			$(this).removeClass('navlink');
+		});
+	});
+</script>
