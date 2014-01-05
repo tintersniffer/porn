@@ -2,9 +2,9 @@
 
 use My\Factory\MyEntityManagerFactory;
 use Models\Repositories\MovieRepository;
-use Models\Entities\User;
 use My\Manager\TransactionManager;
 use Models\Services\UserService;
+use Models\Services\BackendManagementService;
 class IndexController extends Zend_Controller_Action
 {
 
@@ -15,21 +15,10 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$repo = MyEntityManagerFactory::getEntityManager()->getRepository("Models\Entities\User");
-    	    	
-    	$user1 = new User();
-    	$user1->setUsername("map1");
-    	$repo->save($user1, true);
+    	$repo = MyEntityManagerFactory::getEntityManager()->getRepository("User");    
+    	$repo->findAll();
     	
-    	Zend_Debug::dump($user1);
-//     	Die();
-    	
-//     	$user2 = new User();
-//     	$user2->setUsername("map2");
-//     	$repo->save($user2);
-
-    	
-    	UserService::getInstance()->userRepository->findAll();
+    	$bmService = BackendManagementService::getInstance();
     }
     
     public function testAction(){

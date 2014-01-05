@@ -4,12 +4,12 @@ namespace Models\Entities;
 
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\FileRepository")
- * @Table(name="files")
+ * @Table(name="`files`")
  */
 Class File
 {
 	/** @Id
-	 * @Column(name="file_id", type="integer")
+	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
 	protected  $id;
 	

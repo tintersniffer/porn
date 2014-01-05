@@ -9,12 +9,15 @@ namespace Models\Entities;
 class Movie
 {
     /** @Id
-	 * @Column(name="movie_id", type="integer")
+	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
 	protected  $id;
 	
 	/** @Column(name="movie_name", type="string") **/
 	protected $movieName;
+	
+	/** @Column(name="movie_friendly_name", type="string") **/
+	protected $friendlyName;
 	
 	/** @Column(name="chapter", type="string") **/
 	protected $chapter;
@@ -23,13 +26,13 @@ class Movie
 	protected $quality;
 	
 	/** @Column(name="view_count", type="string") **/
-	protected $viewCount;
+	protected $viewCount = 0;
 	
 	/** @Column(name="is_active", type="boolean", nullable=false) **/
-	protected  $isActive;
+	protected  $isActive = true;
 	
 	/** @Column(name="is_publish", type="boolean", nullable=false) **/
-	protected  $isPublish;
+	protected  $isPublish =false;
 
 	/**
 	 *
@@ -107,6 +110,14 @@ class Movie
 		$this->updateDate = $updateDate;
 		return $this;
 	}
+	public function getFriendlyName() {
+		return $this->friendlyName;
+	}
+	public function setFriendlyName($friendlyName) {
+		$this->friendlyName = $friendlyName;
+		return $this;
+	}
+	
 	
 	
 	

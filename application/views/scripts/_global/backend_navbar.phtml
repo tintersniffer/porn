@@ -1,0 +1,20 @@
+<?php 
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+?>
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+      <!-- 
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Dash Board</a>
+        </div>
+         -->
+        <ul class="nav navbar-nav">
+            <li><a href="<?php echo $baseUrl;?>/manage/movies">หนัง</a></li>
+            <li><a href="<?php echo $baseUrl;?>/manage/servers">เซอร์เวอร์</a></li>
+        </ul>
+        
+        <ul class="nav navbar-nav pull-right">
+        	<li><a href="<?php echo $baseUrl;?>/manage/movies">update entity schemas</a></li>
+        </ul>
+      </div>
+    </div>

@@ -22,6 +22,7 @@ abstract class AbstractRepository extends EntityRepository{
 			$this->_em->flush($entity);
 		}
 	
-	}
+	}	
+	
 	
 }

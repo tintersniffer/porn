@@ -46,7 +46,7 @@ $front = Zend_Controller_Front::getInstance()
 ->registerPlugin(MyPlugin::getInstance())
 ->setRouter(MyRouterConfiguration::getRouter());
 
-MyEntityManagerFactory::$isUpdateSchema = true;
+// MyEntityManagerFactory::$isUpdateSchema = true;
 
 MyDatabaseConfiguration::$databaseHost = '127.0.0.1';
 MyDatabaseConfiguration::$databaseName = 'swim';
