@@ -1,5 +1,8 @@
 <?php
 
+use Models\Entities\Server;
+use My\Factory\MyEntityManagerFactory;
+use My\Manager\MyLayoutManager;
 class ManageProcessorController extends Zend_Controller_Action
 {
 
@@ -29,14 +32,33 @@ class ManageProcessorController extends Zend_Controller_Action
 		// action body
 	}
 	
-	public function serverCreateAction()
+	public function addNewServerAction()
 	{
 		// action body
+		$server = new Server();
+		$serverRepo = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server');
+		$server->setUrl($this->getRequest()->getPost('url'));
+		$url = $this->getRequest()->getPost('url');
+		if(!empty($url)){
+			$serverRepo->save($server,true);
+		}
+		Zend_Debug::dump($server);
+		//Die();
+		$url = '/manage/servers';
+		$this->redirect($url);
+		//$this->forward("servers","manage");
 	}
 	
-	public function serverUpdateAction()
+	public function updateServerAction()
 	{
 		// action body
+		$id = $this->getRequest()->getPost('id');
+		$server = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Server")->find($id);
+		$server->setUrl($this->getRequest()->getPost('url'));
+		Zend_Debug::dump($server);
+		Die();
+		$url = '/manage/servers';
+		$this->redirect($url);
 	}
 	
 	public function serverDeleteAction()

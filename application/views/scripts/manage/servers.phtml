@@ -1,4 +1,29 @@
+<?php 
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+?>
+<a href="<?php echo "$baseUrl/manage/add-new-server";?>" class="btn btn-primary">Add new server</a>
 <br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Manage</b> and script/action name <b>servers</b></p>
-</div>
+<table class="table table-bordered table-condense">
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>url</th>
+			<th>#action</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php 
+	foreach ($this->servers as $server):
+	/* @var $server \Models\Entities\Server */
+	?>
+		<tr>
+			<td><?php echo $server->getId() ?></td>
+			<td><?php echo $server->getUrl() ?></td>
+			<td><a href="<?php echo "$baseUrl/manage/update-server?id=".$server->getId();?>">Update</a>
+			/ <a href="<?php echo "$baseUrl/manage/update-server?id=".$server->getId();?>">Delete</a></td>
+		</tr>	
+	<?php 
+	endforeach;	
+	?>
+	</tbody>
+</table>

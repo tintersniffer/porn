@@ -1,6 +1,8 @@
 <?php
 
 use My\Manager\MyLayoutManager;
+use Models\Services\BackendManagementService;
+use My\Factory\MyEntityManagerFactory;
 class ManageController extends Zend_Controller_Action
 {
 
@@ -18,21 +20,24 @@ class ManageController extends Zend_Controller_Action
     public function serversAction()
     {
         // action body
+        $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findAll();
     }
 
     public function moviesAction()
     {
         // action body
+       
     }
 
     public function serverDetailAction()
     {
-        // action body
+        // ทำอันนี้ก่อน เหมือน data table 
     }
 
     public function movieDetailAction()
     {
         // action body
+        //$this->view->movies = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Movie')->findAll();
     }
 
     public function loginAction()
@@ -40,6 +45,14 @@ class ManageController extends Zend_Controller_Action
         // action body
     }
 
+    public function addNewServerAction(){
+    	
+    }
+
+    public function updateServerAction(){
+    	$id = $this->getRequest()->getParam("id");
+    	$this->view->server = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Server")->find($id);
+    }
 
 }
 

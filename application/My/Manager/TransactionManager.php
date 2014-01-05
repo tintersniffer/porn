@@ -7,26 +7,23 @@ use My\Illusion\aop_add_before;
 
 class TransactionManager{
 	
-	/**
-	 * 
-	 * @var EntityManage
-	 */
-	private $_em;
+	
 	
 	private function __construct(){
-		$this->em = MyEntityManagerFactory::getEntityManager();
 	}
 	
 	
 	
 	public static function start(){		
 		$em = MyEntityManagerFactory::getEntityManager();	
+		
 		/* @var $jp \My\Illusion\AopJoinpoint */
 		
 		
 		$before = function($jp) use($em) {
 // 			echo "AOP:BEFORE";
 			TransactionManager::$_stateData[++TransactionManager::$_stateIndex] = 1;
+			$em->flush();
 			$em->beginTransaction();
 		};
 		
@@ -39,6 +36,7 @@ class TransactionManager{
 			} else {
 // 				echo "AOP:AFTER";
 				if (TransactionManager::$_stateData [TransactionManager::$_stateIndex]===1) {
+					$em->flush();
 					$em->commit ();
 				} else if(TransactionManager::$_stateData [TransactionManager::$_stateIndex]==0){
 					$em->rollback();
