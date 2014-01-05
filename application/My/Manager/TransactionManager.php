@@ -27,6 +27,7 @@ class TransactionManager{
 		$before = function($jp) use($em) {
 // 			echo "AOP:BEFORE";
 			TransactionManager::$_stateData[++TransactionManager::$_stateIndex] = 1;
+			$em->flush();
 			$em->beginTransaction();
 		};
 		
