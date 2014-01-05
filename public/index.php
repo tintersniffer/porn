@@ -3,6 +3,9 @@ use My\Plugin\MyPlugin;
 use My\Configs\MyRouterConfiguration;
 use My\Configs\MyDatabaseConfiguration;
 use My\Utils\MyCache;
+use My\Factory\MyEntityManagerFactory;
+use My\Manager\TransactionManager;
+use Models\AbstractService;
 
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
@@ -43,6 +46,7 @@ $front = Zend_Controller_Front::getInstance()
 ->registerPlugin(MyPlugin::getInstance())
 ->setRouter(MyRouterConfiguration::getRouter());
 
+MyEntityManagerFactory::$isUpdateSchema = true;
 
 MyDatabaseConfiguration::$databaseHost = '127.0.0.1';
 MyDatabaseConfiguration::$databaseName = 'swim';
@@ -53,6 +57,8 @@ MyDatabaseConfiguration::$databaseHost = 'localhost';
 MyDatabaseConfiguration::$databaseName = 'mapz_porn';
 MyDatabaseConfiguration::$databaseUserName = 'mapz_dev';
 MyDatabaseConfiguration::$databasePassword = 'adminP@12w0rd';
+
+TransactionManager::start();
 
 //$application->bootstrap()->run();
 
