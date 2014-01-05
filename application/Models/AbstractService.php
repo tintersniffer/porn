@@ -44,8 +44,10 @@ abstract class AbstractService{
 				$args = $jp->getArguments();
 				
 				foreach ($params AS $key=>$param) {
-					$entityName = str_replace(array('Repositories','Repository'), array('Entities',''), $param->getClass()->name);
-					$args[$key] = $em->getRepository($entityName);
+					if($param->getClass()){
+						$entityName = '\\'. str_replace(array('Repositories','Repository'), array('Entities',''), $param->getClass()->name);
+						$args[$key] = $em->getRepository($entityName);
+					}					
 				}
 				
 // 				\Zend_Debug::dump($args);
