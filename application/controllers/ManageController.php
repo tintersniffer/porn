@@ -21,13 +21,21 @@ class ManageController extends Zend_Controller_Action
     {
         // action body
         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findAll();
+//         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
+    }
+
+    public function typesAction()
+    {
+        // action body
+        $this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type')->findAll();
+//         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
     }
 
     public function moviesAction()
     {
         // action body
-       
-    }
+    	$this->view->movies = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Movie')->findAll();
+   	}
 
     public function serverDetailAction()
     {
@@ -49,11 +57,35 @@ class ManageController extends Zend_Controller_Action
     	
     }
 
+    public function addNewTypeAction(){
+    	
+    }
+
+    public function addNewMovieAction(){
+    	$this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type')->findAll();
+    	 
+    }
+
+    public function uploadNewMovieAction(){
+    	$this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findAll();
+    	
+    }
+
     public function updateServerAction(){
     	$id = $this->getRequest()->getParam("id");
     	$this->view->server = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Server")->find($id);
     }
 
+    public function updateTypeAction(){
+    	$id = $this->getRequest()->getParam("id");
+    	$this->view->type = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Type")->find($id);
+    }
+
+    public function updateMovieAction(){
+    	$id = $this->getRequest()->getParam("id");
+    	$this->view->movie = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Movie")->find($id);
+    }
+ 
 }
 
 

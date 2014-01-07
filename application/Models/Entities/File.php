@@ -4,7 +4,7 @@ namespace Models\Entities;
 
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\FileRepository")
- * @Table(name="`files`")
+ * @Table(name="files")
  */
 Class File
 {
@@ -18,7 +18,9 @@ Class File
 	
 	/** @Column(name="file_name", type="string") **/
 	protected $fileName;
-	
+
+	/** @Column(name="quality", type="string") **/
+	protected $quality;
 	/**
 	 *
 	 * @var Server
@@ -26,14 +28,14 @@ Class File
 	 * @JoinColumn(name="server_id", referencedColumnName="id")
 	 */
 	protected $server;
-	
-	/**
-	 *
-	 * @var Movie
-	 * @ManyToOne(targetEntity="Movie")
-	 * @JoinColumn(name="movie_id", referencedColumnName="id")
-	 */
-	protected $movie;
+
+	public function getQuality() {
+		return $this->quality;
+	}
+	public function setQuality($quality) {
+		$this->quality = $quality;
+		return $this;
+	}
 	
 	public function getId() {
 		return $this->id;
@@ -70,6 +72,7 @@ Class File
 		$this->movie = $movie;
 		return $this;
 	}
+	
 	
 	
 	

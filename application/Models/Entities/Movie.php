@@ -2,6 +2,7 @@
 namespace Models\Entities;
 
 
+use Doctrine\DBAL\Types\Type;
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\MovieRepository")
  * @Table(name="movies")
@@ -11,7 +12,7 @@ class Movie
     /** @Id
 	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
-	protected  $id;
+	protected $id;
 	
 	/** @Column(name="movie_name", type="string") **/
 	protected $movieName;
@@ -19,11 +20,8 @@ class Movie
 	/** @Column(name="movie_friendly_name", type="string") **/
 	protected $friendlyName;
 	
-	/** @Column(name="chapter", type="string") **/
-	protected $chapter;
-	
-	/** @Column(name="quality", type="string") **/
-	protected $quality;
+	/** @Column(name="description", type="string") **/
+	protected $description;
 	
 	/** @Column(name="view_count", type="string") **/
 	protected $viewCount = 0;
@@ -43,9 +41,25 @@ class Movie
 	/**
 	 *
 	 * @var \DateTime
-	 *  @Column(name="updated_date", type="datetime", nullable=false)
+	 *  @Column(name="updated_date", type="datetime", nullable=true)
 	 */
-	protected $updateDate;
+	protected $updatedDate;
+
+	/**
+	 *
+	 * @var File
+	 * @ManyToOne(targetEntity="File")
+	 * @JoinColumn(name="file_id", referencedColumnName="id")
+	 */
+	protected $file;
+	
+	/**
+	 *
+	 * @var Type
+	 * @ManyToOne(targetEntity="Type")
+	 * @JoinColumn(name="type_id", referencedColumnName="id")
+	 */
+	protected $type;
 	
 	public function getId() {
 		return $this->id;
@@ -61,18 +75,18 @@ class Movie
 		$this->movieName = $movieName;
 		return $this;
 	}
-	public function getChapter() {
-		return $this->chapter;
+	public function getFriendlyName() {
+		return $this->friendlyName;
 	}
-	public function setChapter($chapter) {
-		$this->chapter = $chapter;
+	public function setFriendlyName($friendlyName) {
+		$this->friendlyName = $friendlyName;
 		return $this;
 	}
-	public function getQuality() {
-		return $this->quality;
+	public function getDescription() {
+		return $this->description;
 	}
-	public function setQuality($quality) {
-		$this->quality = $quality;
+	public function setDescription($description) {
+		$this->description = $description;
 		return $this;
 	}
 	public function getViewCount() {
@@ -103,25 +117,33 @@ class Movie
 		$this->createdDate = $createdDate;
 		return $this;
 	}
-	public function getUpdateDate() {
-		return $this->updateDate;
+	
+	public function getFile() {
+		return $this->file;
 	}
-	public function setUpdateDate(\DateTime $updateDate) {
-		$this->updateDate = $updateDate;
+	public function setFile(File $file) {
+		$this->file = $file;
 		return $this;
 	}
-	public function getFriendlyName() {
-		return $this->friendlyName;
+	public function getType() {
+		return $this->type;
 	}
-	public function setFriendlyName($friendlyName) {
-		$this->friendlyName = $friendlyName;
+	public function setType(Type $type) {
+		$this->type = $type;
+		return $this;
+	}
+	public function getUpdatedDate() {
+		return $this->updatedDate;
+	}
+	public function setUpdatedDate(\DateTime $updatedDate) {
+		$this->updatedDate = $updatedDate;
 		return $this;
 	}
 	
 	
 	
 	
-
+	
 }
 
 

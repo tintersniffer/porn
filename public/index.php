@@ -38,15 +38,17 @@ Zend_Session::start();
 
 
 /* setup Cache System */
-MyCache::$namespacePrefix = "ns1";
-MyCache::setType(MyCache::$TYPE_ARRAY);
+MyEntityManagerFactory::$isUpdateSchema = false;
+MyCache::$namespacePrefix = "ns4";
+
+MyCache::setType(MyCache::$TYPE_XCACHE);
 
 /** configure front controller */
 $front = Zend_Controller_Front::getInstance()
 ->registerPlugin(MyPlugin::getInstance())
 ->setRouter(MyRouterConfiguration::getRouter());
+ 
 
-// MyEntityManagerFactory::$isUpdateSchema = true;
 
 MyDatabaseConfiguration::$databaseHost = '127.0.0.1';
 MyDatabaseConfiguration::$databaseName = 'swim';
