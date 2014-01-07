@@ -1,0 +1,35 @@
+<?php 
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+?>
+<a href="<?php echo "$baseUrl/manage/add-new-type";?>" class="btn btn-primary">Add new type</a>
+<br /><br />
+<table class="table table-bordered table-condense">
+	<thead>
+		<tr>
+			<th width="10%" class="text-center">id</th>
+			<th width="30%">Name</th>
+			<th width="40%">Description</th>
+			<th width="20%">#action</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php 
+	foreach ($this->types as $type):
+	/* @var $type \Models\Entities\Type */
+	?>
+		<tr <?php if(! $type->getIsActive()) echo 'class="danger"';?>>
+			<td class="text-center"><?php echo $type->getId() ?></td>
+			<td><?php echo $type->getTypeName() ?></td>
+			<td><?php echo $type->getDescription() ?></td>
+			<?php if(!$type->getIsActive()){?>
+				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-type?id=".$type->getId();?>" class="btn btn-primary">Restore</a></td>
+			<?php }else{?>
+				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-type?id=".$type->getId();?>" class="btn btn-primary">Update</a>
+			 	<a href="<?php echo "$baseUrl/manage-processor/delete-type?id=".$type->getId();?>" class="btn btn-primary">Delete</a></td>
+			<?php }?>
+			</tr>	
+	<?php 
+	endforeach;	
+	?>
+	</tbody>
+</table>

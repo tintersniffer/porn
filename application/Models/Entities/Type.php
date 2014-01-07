@@ -1,26 +1,26 @@
 <?php
 namespace Models\Entities;
 
- 
+
 /**
- * @Entity(readOnly=false, repositoryClass="\Models\Repositories\ServerRepository")
- * @Table(name="servers")
+ * @Entity(readOnly=false, repositoryClass="\Models\Repositories\TypeRepository")
+ * @Table(name="types")
  */
-Class Server
+Class Type
 {
 	/** @Id
 	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
 	protected  $id;
 	
-	/** @Column(name="url", type="string") **/
-	protected $url;
+	/** @Column(name="type_name", type="string") **/
+	protected $typeName;
 	
-	/** @Column(name="protocal", type="string") **/
-	protected $protocal;
-
+	/** @Column(name="description", type="string") **/
+	protected $description;
+	
 	/** @Column(name="is_active", type="boolean", nullable=false) **/
-	protected  $isActive = true;
+	protected  $isActive = true; 
 	
 	/**
 	 *
@@ -42,11 +42,18 @@ Class Server
 		$this->id = $id;
 		return $this;
 	}
-	public function getUrl() {
-		return $this->url;
+	public function getTypeName() {
+		return $this->typeName;
 	}
-	public function setUrl($url) {
-		$this->url = $url;
+	public function setTypeName($typeName) {
+		$this->typeName = $typeName;
+		return $this;
+	}
+	public function getDescription() {
+		return $this->description;
+	}
+	public function setDescription($description) {
+		$this->description = $description;
 		return $this;
 	}
 	public function getIsActive() {
@@ -70,16 +77,6 @@ Class Server
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
-	public function getProtocal() {
-		return $this->protocal;
-	}
-	public function setProtocal($protocal) {
-		$this->protocal = $protocal;
-		return $this;
-	}
-	
-	
-	
 	
 	
 	

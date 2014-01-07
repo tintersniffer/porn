@@ -1,0 +1,71 @@
+<?php $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();?>
+<br />
+<h3 class="text-center">Update movie</h3>
+<br />
+<form class="form-horizontal" role="form" method="post" action="<?php echo "$baseUrl/manage-processor/update-movie"?>">
+<input type="hidden" name="id" value="<?php echo $this->movie->getId() ?>" />
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="Movie Name" name="movieName" value="<?php echo $this->movie->getMovieName() ?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Friendly Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="Friendly Name" name="friendlyName" value="<?php echo $this->movie->getFriendlyName() ?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Description</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="Description" name="description" value="<?php echo $this->movie->getDescription() ?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Type</label>
+    <div class="col-sm-10">
+      	<select class="form-control">
+      		<option value="1">Punk</option>
+      		<option value="2">Rock</option>
+      		<option value="3">Heavy</option>
+      	</select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Low Quality</label>
+    <div class="col-sm-10">
+      <select class="form-control">
+      		<option value="1">Choose Movie</option>
+      		<option value="2">Server 2</option>
+      		<option value="3">Server 3</option>
+      	</select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">High Quality</label>
+    <div class="col-sm-10">
+      <select class="form-control">
+      		<option value="1">Choose Movie</option>
+      		<option value="2">Server 2</option>
+      		<option value="3">Server 3</option>
+      	</select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">&nbsp;</label>
+    <div class="col-sm-10">
+      <a href="<?php echo "$baseUrl/manage/add-new-file";?>" class="btn btn-primary">Upload new file</a>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10 text-center">
+      <button type="submit" class="btn btn-default">Update</button>
+    </div>
+  </div>
+</form>
