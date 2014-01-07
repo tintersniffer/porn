@@ -67,7 +67,7 @@ class ManageController extends Zend_Controller_Action
     }
 
     public function uploadNewMovieAction(){
-    	$this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findAll();
+    	$this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
     	
     }
 

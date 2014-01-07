@@ -7,7 +7,7 @@ namespace Models\Entities;
  * @Table(name="servers")
  */
 Class Server
-{
+{ 
 	/** @Id
 	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
@@ -18,6 +18,9 @@ Class Server
 	
 	/** @Column(name="protocal", type="string") **/
 	protected $protocal;
+	
+	/** @Column(name="triggerUrl", type="string") **/
+	protected $triggerUrl;
 
 	/** @Column(name="is_active", type="boolean", nullable=false) **/
 	protected  $isActive = true;
@@ -77,6 +80,14 @@ Class Server
 		$this->protocal = $protocal;
 		return $this;
 	}
+	public function getTriggerUrl() {
+		return $this->triggerUrl;
+	}
+	public function setTriggerUrl($triggerUrl) {
+		$this->triggerUrl = $triggerUrl;
+		return $this;
+	}
+	
 	
 	
 	
