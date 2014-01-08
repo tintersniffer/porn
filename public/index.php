@@ -41,7 +41,7 @@ Zend_Session::start();
 MyEntityManagerFactory::$isUpdateSchema = true;
 MyCache::$namespacePrefix = "ns5";
 
-MyCache::setType(MyCache::$TYPE_XCACHE);
+MyCache::setType(MyCache::$TYPE_ARRAY);
 
 /** configure front controller */
 $front = Zend_Controller_Front::getInstance()
@@ -55,10 +55,10 @@ MyDatabaseConfiguration::$databaseName = 'swim';
 MyDatabaseConfiguration::$databaseUserName = 'root';
 MyDatabaseConfiguration::$databasePassword = 'adminadmin';
 
-MyDatabaseConfiguration::$databaseHost = 'localhost'; 
-MyDatabaseConfiguration::$databaseName = 'mapz_porn';
-MyDatabaseConfiguration::$databaseUserName = 'mapz_dev';
-MyDatabaseConfiguration::$databasePassword = 'adminP@12w0rd';
+// MyDatabaseConfiguration::$databaseHost = 'localhost'; 
+// MyDatabaseConfiguration::$databaseName = 'mapz_porn';
+// MyDatabaseConfiguration::$databaseUserName = 'mapz_dev';
+// MyDatabaseConfiguration::$databasePassword = 'adminP@12w0rd';
 
 TransactionManager::start();
 
