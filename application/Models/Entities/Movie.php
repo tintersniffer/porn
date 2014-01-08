@@ -47,19 +47,30 @@ class Movie
 
 	/**
 	 *
+	 *
 	 * @var File
-	 * @ManyToOne(targetEntity="File")
-	 * @JoinColumn(name="file_id", referencedColumnName="id")
+	 * @OneToOne(targetEntity="File")
+	 * @JoinColumn(name="high_quality_file_id", referencedColumnName="id")
 	 */
-	protected $file;
+	protected $highQualityFile;
 	
 	/**
-	 *
+	 * 
+	 * 
 	 * @var Type
 	 * @ManyToOne(targetEntity="Type")
 	 * @JoinColumn(name="type_id", referencedColumnName="id")
 	 */
 	protected $type;
+	
+	/**
+	 * 
+	 * 
+	 * @var File
+	 * @OneToOne(targetEntity="File")
+	 * @JoinColumn(name="low_quality_file_id", referencedColumnName="id")
+	 */
+	protected $lowQualityFile;
 	
 	public function getId() {
 		return $this->id;
@@ -117,21 +128,6 @@ class Movie
 		$this->createdDate = $createdDate;
 		return $this;
 	}
-	
-	public function getFile() {
-		return $this->file;
-	}
-	public function setFile(File $file) {
-		$this->file = $file;
-		return $this;
-	}
-	public function getType() {
-		return $this->type;
-	}
-	public function setType(Type $type) {
-		$this->type = $type;
-		return $this;
-	}
 	public function getUpdatedDate() {
 		return $this->updatedDate;
 	}
@@ -139,8 +135,27 @@ class Movie
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
-	
-	
+	public function getHighQualityFile() {
+		return $this->highQualityFile;
+	}
+	public function setHighQualityFile($highQualityFile) {
+		$this->highQualityFile = $highQualityFile;
+		return $this;
+	}
+	public function getType() {
+		return $this->type;
+	}
+	public function setType($type) {
+		$this->type = $type;
+		return $this;
+	}
+	public function getLowQualityFile() {
+		return $this->lowQualityFile;
+	}
+	public function setLowQualityFile($lowQualityFile) {
+		$this->lowQualityFile = $lowQualityFile;
+		return $this;
+	}
 	
 	
 	

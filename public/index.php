@@ -38,8 +38,8 @@ Zend_Session::start();
 
 
 /* setup Cache System */
-MyEntityManagerFactory::$isUpdateSchema = false;
-MyCache::$namespacePrefix = "ns4";
+MyEntityManagerFactory::$isUpdateSchema = true;
+MyCache::$namespacePrefix = "ns5";
 
 MyCache::setType(MyCache::$TYPE_XCACHE);
 

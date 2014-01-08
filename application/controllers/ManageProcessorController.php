@@ -39,9 +39,9 @@ class ManageProcessorController extends Zend_Controller_Action
 		// action body
 		$server = new Server();
 		$serverRepo = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server');
-		//$server->setUrl($this->getRequest()->getPost('url'));
+		$server->setUrl($this->getRequest()->getPost('url'));
 		$server->setProtocal($this->getRequest()->getPost('protocal'));
-		$server->setUrl($this->getRequest()->getPost('protocal').$this->getRequest()->getPost('url'));
+		//$server->setUrl($this->getRequest()->getPost('protocal').$this->getRequest()->getPost('url'));
 		$server->setTriggerUrl($this->getRequest()->getPost('protocal').$this->getRequest()->getPost('url'));
 		$currentDate = new DateTime();
 		$server->setCreatedDate($currentDate);
@@ -84,18 +84,26 @@ class ManageProcessorController extends Zend_Controller_Action
 		$movie->setMovieName($this->getRequest()->getPost('movieName'));
 		$movie->setFriendlyName($this->getRequest()->getPost('friendlyName'));
 		$movie->setDescription($this->getRequest()->getPost('description'));
-// 		$type = new Type();
-// 		$type->setId($this->getRequest()->getPost('type'));
-// 		$movie->setType($type);
+		$type =  MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type')->find($this->getRequest()->getPost('type'));
+		$movie->setType($type);
 // 		Zend_Debug::dump($type);
-// 		Die($this->getRequest()->getPost('type'));
+// 		die($this->getRequest()->getPost('lowFile'));
+//  		Die($this->getRequest()->getPost('type'));
+		if($this->getRequest()->getPost('lowFile')!=0){
+			$lowFile = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\File')->find($this->getRequest()->getPost('lowFile'));
+			$movie->setLowQualityFile($lowFile);
+		}
+		if($this->getRequest()->getPost('highFile')!=0){
+			$highFile = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\File')->find($this->getRequest()->getPost('highFile'));
+			$movie->setHighQualityFile($highFile);
+		}
 		$currentDate = new DateTime();
 		$movie->setCreatedDate($currentDate);
 		$movie->setUpdatedDate($currentDate);
 		$movie->setIsActive(true);
 		$movieRepo->save($movie);
 		Zend_Debug::dump($movie);
-		Die();
+// 		Die();
 		$url = '/manage/movies';
 		$this->redirect($url);
 		//$this->forward("servers","manage");
@@ -158,6 +166,8 @@ class ManageProcessorController extends Zend_Controller_Action
 		$id = $this->getRequest()->getPost('id');
 		$server = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Server")->find($id);
 		$server->setUrl($this->getRequest()->getPost('url'));
+		$server->setProtocal($this->getRequest()->getPost('protocal'));
+		$server->setTriggerUrl($this->getRequest()->getPost('protocal').$this->getRequest()->getPost('url'));
 		$currentDate = new DateTime();
 		$server->setUpdatedDate($currentDate);
 		Zend_Debug::dump($server);

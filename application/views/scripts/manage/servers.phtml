@@ -18,7 +18,7 @@
 	?>
 		<tr <?php if(! $server->getIsActive()) echo 'class="danger"';?>>
 			<td class="text-center"><?php echo $server->getId() ?></td>
-			<td><?php echo $server->getUrl() ?></td>
+			<td><?php echo $server->getTriggerUrl() ?></td>
 			<?php if(!$server->getIsActive()){?>
 				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-server?id=".$server->getId();?>" class="btn btn-primary">Restore</a></td>
 			<?php }else{?>

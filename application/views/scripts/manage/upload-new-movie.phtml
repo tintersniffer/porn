@@ -12,7 +12,7 @@
 				foreach ($this->servers as $server):
 				/* @var $server \Models\Entities\Server */
 				?>
-		      		<option value="<?php echo $server->getUrl() ?>"><?php echo $server->getUrl() ?></option>
+		      		<option value="<?php echo $server->getUrl() ?>"><?php echo $server->getTriggerUrl() ?></option>
 		      	<?php endforeach;	?>
       		</select>
 		</div>
