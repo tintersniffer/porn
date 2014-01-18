@@ -3,6 +3,7 @@ namespace Models\Entities;
 
 
 use Doctrine\DBAL\Types\Type;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\MovieRepository")
  * @Table(name="movies")
@@ -48,14 +49,25 @@ class Movie
 	/** @Column(name="high_quality_file", type="string") **/
 	protected $highQualityFile;
 	
-	/** @Column(name="high_quality_cover", type="string") **/
-	protected $highQualityCover;
-	
 	/** @Column(name="low_quality_file", type="string") **/
 	protected $lowQualityFile;
 	
-	/** @Column(name="low_quality_cover", type="string") **/
-	protected $lowQualityCover;
+	/** @Column(name="cover", type="string") **/
+	/**
+	 *
+	 *
+	 * @var Image
+	 * @OneToOne(targetEntity="Image")
+	 * @JoinColumn(name="image_id", referencedColumnName="id")
+	 */
+	protected $cover;
+	
+	/**
+	 *
+	 * @var ArrayCollection
+	 * @OneToMany(targetEntity="Image", mappedBy="movie", cascade={})
+	 */
+	protected $screenShot;
 	
 	/**
 	 * 
@@ -136,25 +148,11 @@ class Movie
 		$this->highQualityFile = $highQualityFile;
 		return $this;
 	}
-	public function getHighQualityCover() {
-		return $this->highQualityCover;
-	}
-	public function setHighQualityCover($highQualityCover) {
-		$this->highQualityCover = $highQualityCover;
-		return $this;
-	}
 	public function getLowQualityFile() {
 		return $this->lowQualityFile;
 	}
 	public function setLowQualityFile($lowQualityFile) {
 		$this->lowQualityFile = $lowQualityFile;
-		return $this;
-	}
-	public function getLowQualityCover() {
-		return $this->lowQualityCover;
-	}
-	public function setLowQualityCover($lowQualityCover) {
-		$this->lowQualityCover = $lowQualityCover;
 		return $this;
 	}
 	public function getCategory() {
@@ -164,6 +162,31 @@ class Movie
 		$this->category = $category;
 		return $this;
 	}
+	public function getCover() {
+		return $this->cover;
+	}
+	public function setCover($cover) {
+		$this->cover = $cover;
+		return $this;
+	}
+	public function getScreenShot() {
+		return $this->screenShot;
+	}
+	public function setScreenShot($screenShot) {
+		if(empty($this->screenShot)){
+			$this->screenShot = new ArrayCollection();
+		}
+		
+		foreach ($screenShot as $k=>$image){
+			/* @var $image \Models\Entities\Image */
+			$image->setMovie($this);
+			$this->screenShot->add($image);
+		}		
+		
+		
+		return $this;
+	}
+	
 	
 	
 	

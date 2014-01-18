@@ -24,5 +24,13 @@ abstract class AbstractRepository extends EntityRepository{
 	
 	}	
 	
+	public function delete($entity, $flush = false){
+		$this->_em->remove($entity);
+		
+		if($flush){
+			$this->_em->flush($entity);
+		}
+	}
+	
 	
 }

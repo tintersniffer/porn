@@ -129,17 +129,27 @@ class ManageProcessorController extends Zend_Controller_Action
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
 		$movie->setHighQualityFile($this->getRequest()->getPost('highQualityFile'));
-		$movie->setHighQualityCover($this->getRequest()->getPost('highQualityCover'));
 		$movie->setLowQualityFile($this->getRequest()->getPost('lowQualityFile'));
-		$movie->setLowQualityCover($this->getRequest()->getPost('lowQualityCover'));
+		
+		
+		
 		
 		$currentDate = new DateTime();
 		$movie->setCreatedDate($currentDate);
 		$movie->setUpdatedDate($currentDate);
 		$movie->setIsActive(true);
 		$movieRepo->save($movie);
-		Zend_Debug::dump($movie);
-// 		Die();
+		
+		if($_FILES ['cover'] ['name']!=""){
+			$cover = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveImage('cover');
+			$movie->setCover($cover);
+		}
+		if($_FILES ['screenShot'] ['name'][0]!=""){
+			$screenShot = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveMultipleImages('screenShot');
+			$movie->setScreenShot($screenShot);
+		}
+		
+		
 		$url = '/manage/movies';
 		$this->redirect($url);
 		//$this->forward("servers","manage");
@@ -158,13 +168,28 @@ class ManageProcessorController extends Zend_Controller_Action
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
 		$movie->setHighQualityFile($this->getRequest()->getPost('highQualityFile'));
-		$movie->setHighQualityCover($this->getRequest()->getPost('highQualityCover'));
 		$movie->setLowQualityFile($this->getRequest()->getPost('lowQualityFile'));
-		$movie->setLowQualityCover($this->getRequest()->getPost('lowQualityCover'));
+		
+		
 		$currentDate = new DateTime();
 		$movie->setUpdatedDate($currentDate);
 		$movie->setIsActive(true);
-		Zend_Debug::dump($movie);
+		
+		if($_FILES ['cover'] ['name']!=""){
+			$cover = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveImage('cover');
+			$movie->setCover($cover);
+		}
+		
+		if($_FILES ['screenShot'] ['name'][0]!=""){
+// 			MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->
+			foreach ($movie->getScreenShot() as $screenShotObj){
+				$image = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->find($screenShotObj->getId());
+				$image->setMovie(null);
+			}
+			$screenShot = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveMultipleImages('screenShot');
+			$movie->setScreenShot($screenShot);
+		}
+		
 		//Die();
 		$url = '/manage/movies';
 		$this->redirect($url);
