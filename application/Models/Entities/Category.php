@@ -35,6 +35,9 @@ Class Category
 	 */
 	protected $updatedDate;
 	
+	/** @Column(name="`order`", type="integer") **/
+	protected $order = 5;
+	
 	
 	public function getId() {
 		return $this->id;
@@ -78,6 +81,14 @@ Class Category
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
+	public function getOrder() {
+		return $this->order;
+	}
+	public function setOrder($order) {
+		$this->order = $order;
+		return $this;
+	}
+	
 	
 
 	

@@ -14,10 +14,13 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	$repo = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\File");    
-    	$repo->findAll();
+//     	$repo = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\File");    
+//     	$repo->findAll();
     	
-    	$bmService = BackendManagementService::getInstance();
+//     	$bmService = BackendManagementService::getInstance();
+
+    	$repo = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Movie');
+    	$this->view->movies = $repo->findBy(array('isActive'=>true),array('id'=>'desc'));
     }
     
     public function testAction(){

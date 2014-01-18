@@ -3,7 +3,7 @@ namespace My\Manager;
 
 class MyLayoutManager {
 
-	private $_defaultTitle = '<title>ยินดีต้อนรับเข้าสู่ Bangkok5 Swim</title>';
+	private $_defaultTitle = '<title>ไม่รู้เป็นอาร้าย</title>';
 	private $_defaultDescription = "";
 	private $_defaultKeyword = "";
 	private $_defaultRobot = '<meta name="robots" content="index, follow" />';

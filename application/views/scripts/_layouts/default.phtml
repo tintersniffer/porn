@@ -18,10 +18,8 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
 
 <link href="<?php echo $baseUrl;?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="<?php echo $baseUrl;?>/bootstrap/css/non-responsive.css" rel="stylesheet" />
 <link href="<?php echo $baseUrl;?>/css/front.css" rel="stylesheet" />
-<link href="<?php echo $baseUrl;?>/css/ress.css" rel="stylesheet" />
-<link href="<?php echo $baseUrl;?>/css/locationpicker.css" rel="stylesheet" />
-<link href="<?php echo $baseUrl;?>/css/prettyPhoto.css" rel="stylesheet" />
 <?php echo $layoutManager->getAdditionalCssString()?>
 <?php echo $layoutManager->getAdditionalHeaderTagString()?>
 
@@ -32,15 +30,18 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 <![endif]-->
 </head>
 
-<body style="background-color: #eaeaea; color: #2c3e50;">
+<body style="background-color: #bdc3c7">  	
 <script src="<?php echo $baseUrl;?>/js/documentReady.js"></script>
+
+<div class="container" id="wrapper" style="background-color: #ecf0f1;">	
+<?php echo $this->render('/_global/header.phtml');?>
 <?php echo $layoutManager->getContent(); ?>
+<?php echo $this->render('/_global/footer.phtml');?>
+</div>
+
 <script src="<?php echo $baseUrl;?>/js/jquery.js"></script>
 <script src="<?php echo $baseUrl;?>/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo $baseUrl;?>/js/front.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
-<script src="<?php echo $baseUrl;?>/js/locationpicker.js"></script>
-<script src="<?php echo $baseUrl;?>/js/prettyPhoto.js"></script>
 <script type="text/javascript">
 	addDocumentReady(function(){
 		if($('.prettyphoto')[0]){
@@ -50,10 +51,5 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 </script>
 <?php echo $layoutManager->getAdditionalJavascriptString()?>
 <?php echo $layoutManager->getContentScript(); ?>
-<div style="position: fixed; bottom: 0px; z-index: 1000; width: 100%;">
-	<div style="width: 20px; margin: 0 auto;">
-		<script type="text/javascript" language="javascript1.1" src="http://tracker.stats.in.th/tracker.php?sid=56141"></script><noscript><a target="_blank" href="http://www.stats.in.th/">www.Stats.in.th</a></noscript>
-	</div>
-</div>
 </body>
 </html>

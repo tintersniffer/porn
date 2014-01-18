@@ -37,7 +37,7 @@ body{
 	border-right: 2px solid #34495e;
 /* 	border-bottom: 2px solid #34495e; */
 /* 	border-bottom: 2px solid #34495e; */
-	border-top-right-radius: 20px;
+	/* border-top-right-radius: 20px; */
 	transform: rotate(-1deg);
 	-ms-transform: rotate(-1deg); /* IE 9 */
 	-webkit-transform: rotate(-1deg); /* Safari and Chrome */
