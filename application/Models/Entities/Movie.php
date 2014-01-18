@@ -58,10 +58,10 @@ class Movie
 	 * 
 	 * 
 	 * @var Type
-	 * @ManyToOne(targetEntity="Type")
-	 * @JoinColumn(name="type_id", referencedColumnName="id")
+	 * @ManyToOne(targetEntity="Category")
+	 * @JoinColumn(name="category_id", referencedColumnName="id")
 	 */
-	protected $type;
+	protected $category;
 	
 	/**
 	 * 
@@ -71,6 +71,8 @@ class Movie
 	 * @JoinColumn(name="low_quality_file_id", referencedColumnName="id")
 	 */
 	protected $lowQualityFile;
+	
+	
 	
 	public function getId() {
 		return $this->id;
@@ -138,24 +140,26 @@ class Movie
 	public function getHighQualityFile() {
 		return $this->highQualityFile;
 	}
-	public function setHighQualityFile($highQualityFile) {
+	public function setHighQualityFile(File $highQualityFile) {
 		$this->highQualityFile = $highQualityFile;
 		return $this;
 	}
-	public function getType() {
-		return $this->type;
+	public function getCategory() {
+		return $this->category;
 	}
-	public function setType($type) {
-		$this->type = $type;
+	public function setCategory(Type $category) {
+		$this->category = $category;
 		return $this;
 	}
 	public function getLowQualityFile() {
 		return $this->lowQualityFile;
 	}
-	public function setLowQualityFile($lowQualityFile) {
+	public function setLowQualityFile(File $lowQualityFile) {
 		$this->lowQualityFile = $lowQualityFile;
 		return $this;
 	}
+	
+
 	
 	
 	

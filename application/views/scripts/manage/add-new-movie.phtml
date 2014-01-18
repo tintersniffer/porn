@@ -31,7 +31,7 @@
 		foreach ($this->types as $type):
 		/* @var $type \Models\Entities\Type */
 		?>
-      		<option value="<?php echo $type->getId() ?>"><?php echo $type->getTypeName() ?></option>
+      		<option value="<?php echo $type->getId() ?>"><?php echo $type->getName ?></option>
       	<?php endforeach;	?>
       	</select>
     </div>

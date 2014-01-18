@@ -4,17 +4,17 @@ namespace Models\Entities;
 
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\TypeRepository")
- * @Table(name="types")
+ * @Table(name="categories")
  */
-Class Type
+Class Category
 {
 	/** @Id
 	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
 	protected  $id;
 	
-	/** @Column(name="type_name", type="string") **/
-	protected $typeName;
+	/** @Column(name="name", type="string") **/
+	protected $name;
 	
 	/** @Column(name="description", type="string") **/
 	protected $description;
@@ -35,6 +35,7 @@ Class Type
 	 */
 	protected $updatedDate;
 	
+	
 	public function getId() {
 		return $this->id;
 	}
@@ -42,11 +43,11 @@ Class Type
 		$this->id = $id;
 		return $this;
 	}
-	public function getTypeName() {
-		return $this->typeName;
+	public function getName() {
+		return $this->name;
 	}
-	public function setTypeName($typeName) {
-		$this->typeName = $typeName;
+	public function setName($name) {
+		$this->name = $name;
 		return $this;
 	}
 	public function getDescription() {
@@ -77,6 +78,8 @@ Class Type
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
+	
+
 	
 	
 	
