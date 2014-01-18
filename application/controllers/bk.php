@@ -62,7 +62,7 @@ class ManageProcessorController extends Zend_Controller_Action
 	{
 		// action body
 		$type = new Type();
-		$typeRepo = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type');
+		$typeRepo = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category');
 		$type->setTypeName($this->getRequest()->getPost('type'));
 		$type->setDescription($this->getRequest()->getPost('description'));
 		$currentDate = new DateTime();
@@ -85,7 +85,7 @@ class ManageProcessorController extends Zend_Controller_Action
 		$movie->setMovieName($this->getRequest()->getPost('movieName'));
 		$movie->setFriendlyName($this->getRequest()->getPost('friendlyName'));
 		$movie->setDescription($this->getRequest()->getPost('description'));
-		$type =  MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type')->find($this->getRequest()->getPost('type'));
+		$type =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('type'));
 // 		$type->setId($this->getRequest()->getPost('type'));
 		$movie->setType($type);
 		Zend_Debug::dump($type);
@@ -193,7 +193,7 @@ class ManageProcessorController extends Zend_Controller_Action
 	{
 		// action body
 		$id = $this->getRequest()->getPost('id');
-		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Type")->find($id);
+		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\\Models\\Entities\\Category")->find($id);
 		$type->setTypeName($this->getRequest()->getPost('type'));
 		$type->setDescription($this->getRequest()->getPost('description'));
 		$currentDate = new DateTime();
@@ -207,7 +207,7 @@ class ManageProcessorController extends Zend_Controller_Action
 	{
 		// action body
 		$id = $this->getRequest()->getParam('id');
-		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Type")->find($id);
+		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\\Models\\Entities\\Category")->find($id);
 		$type->setIsActive(false);
 		$currentDate = new DateTime();
 		$type->setUpdatedDate($currentDate);
@@ -234,7 +234,7 @@ class ManageProcessorController extends Zend_Controller_Action
 	{
 		// action body
 		$id = $this->getRequest()->getParam('id');
-		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Type")->find($id);
+		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\\Models\\Entities\\Category")->find($id);
 		$type->setIsActive(true);
 		$currentDate = new DateTime();
 		$type->setUpdatedDate($currentDate);

@@ -19,7 +19,7 @@
 	?>
 		<tr <?php if(! $type->getIsActive()) echo 'class="danger"';?>>
 			<td class="text-center"><?php echo $type->getId() ?></td>
-			<td><?php echo $type->getTypeName() ?></td>
+			<td><?php echo $type->getName() ?></td>
 			<td><?php echo $type->getDescription() ?></td>
 			<?php if(!$type->getIsActive()){?>
 				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-type?id=".$type->getId();?>" class="btn btn-primary">Restore</a></td>
