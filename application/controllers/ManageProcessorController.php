@@ -182,10 +182,10 @@ class ManageProcessorController extends Zend_Controller_Action
 		
 		if($_FILES ['screenShot'] ['name'][0]!=""){
 // 			MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->
-			foreach ($movie->getScreenShot() as $screenShotObj){
-				$image = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->find($screenShotObj->getId());
-				$image->setMovie(null);
-			}
+// 			foreach ($movie->getScreenShot() as $screenShotObj){
+// 				$image = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->find($screenShotObj->getId());
+// 				$image->setMovie(null);
+// 			}
 			$screenShot = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveMultipleImages('screenShot');
 			$movie->setScreenShot($screenShot);
 		}
@@ -194,6 +194,16 @@ class ManageProcessorController extends Zend_Controller_Action
 		$url = '/manage/movies';
 		$this->redirect($url);
 		//$this->forward("servers","manage");
+	}
+	
+	public function deleteImageAction(){
+		$id = $this->getRequest()->getParam('id');
+		$imgId = $this->getRequest()->getParam('imgId');
+		$image = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->find($imgId);
+		$image->setMovie(null);
+
+		$url = '/manage/update-movie?id='.$id;
+		$this->redirect($url);
 	}
 
 	public function deleteMovieAction()
