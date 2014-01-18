@@ -39,7 +39,7 @@ Zend_Session::start();
 
 /* setup Cache System */
 MyEntityManagerFactory::$isUpdateSchema = true;
-MyCache::$namespacePrefix = "ns5";
+MyCache::$namespacePrefix = "ns6";
 
 MyCache::setType(MyCache::$TYPE_ARRAY);
 

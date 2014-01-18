@@ -44,15 +44,18 @@ class Movie
 	 *  @Column(name="updated_date", type="datetime", nullable=true)
 	 */
 	protected $updatedDate;
-
-	/**
-	 *
-	 *
-	 * @var File
-	 * @OneToOne(targetEntity="File")
-	 * @JoinColumn(name="high_quality_file_id", referencedColumnName="id")
-	 */
+	
+	/** @Column(name="high_quality_file", type="string") **/
 	protected $highQualityFile;
+	
+	/** @Column(name="high_quality_cover", type="string") **/
+	protected $highQualityCover;
+	
+	/** @Column(name="low_quality_file", type="string") **/
+	protected $lowQualityFile;
+	
+	/** @Column(name="low_quality_cover", type="string") **/
+	protected $lowQualityCover;
 	
 	/**
 	 * 
@@ -62,17 +65,6 @@ class Movie
 	 * @JoinColumn(name="category_id", referencedColumnName="id")
 	 */
 	protected $category;
-	
-	/**
-	 * 
-	 * 
-	 * @var File
-	 * @OneToOne(targetEntity="File")
-	 * @JoinColumn(name="low_quality_file_id", referencedColumnName="id")
-	 */
-	protected $lowQualityFile;
-	
-	
 	
 	public function getId() {
 		return $this->id;
@@ -140,24 +132,40 @@ class Movie
 	public function getHighQualityFile() {
 		return $this->highQualityFile;
 	}
-	public function setHighQualityFile(File $highQualityFile) {
+	public function setHighQualityFile($highQualityFile) {
 		$this->highQualityFile = $highQualityFile;
 		return $this;
 	}
-	public function getCategory() {
-		return $this->category;
+	public function getHighQualityCover() {
+		return $this->highQualityCover;
 	}
-	public function setCategory(Type $category) {
-		$this->category = $category;
+	public function setHighQualityCover($highQualityCover) {
+		$this->highQualityCover = $highQualityCover;
 		return $this;
 	}
 	public function getLowQualityFile() {
 		return $this->lowQualityFile;
 	}
-	public function setLowQualityFile(File $lowQualityFile) {
+	public function setLowQualityFile($lowQualityFile) {
 		$this->lowQualityFile = $lowQualityFile;
 		return $this;
 	}
+	public function getLowQualityCover() {
+		return $this->lowQualityCover;
+	}
+	public function setLowQualityCover($lowQualityCover) {
+		$this->lowQualityCover = $lowQualityCover;
+		return $this;
+	}
+	public function getCategory() {
+		return $this->category;
+	}
+	public function setCategory($category) {
+		$this->category = $category;
+		return $this;
+	}
+	
+	
 	
 
 	

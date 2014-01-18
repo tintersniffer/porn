@@ -1,8 +1,8 @@
 <?php $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();?>
 <br />
-<h3 class="text-center">Add new movie</h3>
+<h3 class="text-center">Add new Movie</h3>
 <br />
-<form class="form-horizontal" role="form" method="post" action="<?php echo "$baseUrl/manage-processor/add-new-movie"?>">
+<form id="form" class="form-horizontal" role="form" method="post" action="<?php echo "$baseUrl/manage-processor/add-new-movie"?>">
 
 
   <div class="form-group">
@@ -24,59 +24,158 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Type</label>
+    <label for="inputEmail3" class="col-sm-2 control-label">Category</label>
     <div class="col-sm-10">
-      	<select class="form-control" name="type">
+      	<select class="form-control" name="category">
       	<?php 
-		foreach ($this->types as $type):
-		/* @var $type \Models\Entities\Type */
+		foreach ($this->categories as $category):
+		/* @var $category \Models\Entities\Category */
 		?>
-      		<option value="<?php echo $type->getId() ?>"><?php echo $type->getName ?></option>
+      		<option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
       	<?php endforeach;	?>
       	</select>
     </div>
   </div>
   
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Low Quality</label>
+    <label for="inputEmail3" class="col-sm-2 control-label">Low Quality File</label>
     <div class="col-sm-10">
-      <select class="form-control" name="lowFile">
-      	<option value="0">== choose file ==</option>
-      	<?php 
-		foreach ($this->files as $file):
-		/* @var $file \Models\Entities\File */
-		?>
-      		<option value="<?php echo $file->getId() ?>"><?php echo $file->getFileName() ?></option>
-      	<?php endforeach;	?>
-      	</select>
+    	<input type="text" class="form-control" id="inputEmail3" placeholder="Low Quality File URL" name="lowQualityFile">
     </div>
   </div>
   
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">High Quality</label>
+    <label for="inputEmail3" class="col-sm-2 control-label">Low Quality Cover</label>
     <div class="col-sm-10">
-      <select class="form-control" name="highFile">
-      	<option value="0">== choose file ==</option>
-      	<?php 
-		foreach ($this->files as $file):
-		/* @var $file \Models\Entities\File */
-		?>
-      		<option value="<?php echo $file->getId() ?>"><?php echo $file->getFileName() ?></option>
-      	<?php endforeach;	?>
-      	</select>
+    	<input type="text" class="form-control" id="inputEmail3" placeholder="Low Quality Cover URL" name="lowQualityCover">
     </div>
   </div>
   
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">&nbsp;</label>
+    <label for="inputEmail3" class="col-sm-2 control-label">High Quality File</label>
     <div class="col-sm-10">
-      <a href="<?php echo "$baseUrl/manage/add-new-file";?>" class="btn btn-primary">Upload new file</a>
+    	<input type="text" class="form-control" id="inputEmail3" placeholder="High Quality File URL" name="highQualityFile">
     </div>
   </div>
   
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10" text-center>
-      <button type="submit" class="btn btn-default">Add</button>
+    <label for="inputEmail3" class="col-sm-2 control-label">High Quality Cover</label>
+    <div class="col-sm-10">
+    	<input type="text" class="form-control" id="inputEmail3" placeholder="High Quality Cover URL" name="highQualityCover">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10 text-center" >
+      <button type="submit" class="btn btn-success" style="width: 150px;">Add</button>
     </div>
   </div>
 </form>
+
+<!-- <canvas id="c"></canvas>
+<br />
+<video id="v" controls="controls">
+</video> -->
+
+
+<script>
+// 	addDocumentReady(function(){
+// 		$('#form').submit(function(e){
+// 			e.preventDefault();
+// 			var myVid = $('#v')[0];
+			
+// 			addSourceToVideo(myVid, 's', 'video/mp4');
+// 			//document.body.appendChild(myVid);
+			
+// 			myVid.load();
+// // 			myVid.play();
+			
+// 			setTimeout(function(){
+// 				start = myVid.seekable.start(0);
+// 				end = Math.floor(myVid.seekable.end(0));
+// 				each = end/10;
+// 				var frames = new Array();
+// 				i = 1;
+// 				while(true){
+// 				   if( i*each >= end) break;
+// 				   frames[i] = Math.floor(i*each);
+// // 				   alert(i*each);
+// 				   i = i+1;				   
+// 				}	
+// 				frames[i] = end;
+
+				
+// 				console.log(frames);
+// 				var w = $(myVid).width();
+// 				var h = $(myVid).height();
+
+// 				c = $('#c')[0];
+
+// 				c.width = w;
+// 				c.height = h;
+				
+
+// // 				alert($(c).width());
+// // 				console.log(c);
+// // 				console.log(myVid);
+
+// // 				alert($('#c')[0].toDataURL("image/jpg") );
+				
+// 				ct = c.getContext('2d');
+// // 				myVid.pause();
+
+// // 				alert(i);
+// // 				i=0;
+
+// 				draw(myVid,ct,w,h,frames,1)
+				
+// // 				frames.forEach(function(entry) {
+// // 					i++;
+// // 					myVid.currentTime = entry;
+// // 					ct.drawImage(myVid,0,0,w,h);	
+					
+					
+// // // 					var dataUrl = c.toDataURL();
+// // // 					window.open(dataUrl, "toDataURL() image", "width=600, height=200");
+// // 				});
+								
+// 			},500);
+			
+				
+			
+			
+// // 			end = Math.floor(myVid.seekable.end(0));	
+			
+
+			
+// 			//1. ดึงค่า url
+// 			//2. เอาไปใส่ tag video
+// 			//3. ดึงค่าเวลาออกมาใส่ frames
+// 			//4. ปรับเวลาใน video แล้ว save ค่าใส่ canvas
+// 		});
+// 	});
+
+
+// 	function addSourceToVideo(element, src, type) {
+// 	    var source = document.createElement('source');
+		
+// 	    source.src = src;
+// 	    source.type = type;
+
+// 	    element.appendChild(source);
+// 	}
+	
+// 	function draw(v,c,w,h,frames,ii) {
+// 		if(ii<11){
+// 			v.currentTime = frames[ii];
+// 			c.drawImage(v,0,0,w,h);		
+// 			$('#c')[0].toDataURL("image/jpg");
+// 			setTimeout(draw,500,v,c,w,h,frames,ii+1);	
+// 		}
+// 	}
+
+	
+</script>
+
+
+

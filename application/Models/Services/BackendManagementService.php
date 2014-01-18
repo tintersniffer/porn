@@ -28,7 +28,7 @@ class BackendManagementService extends AbstractService{
 	private $serverRepository;
 	
 	
-	protected function __construct(FileRepository $fileRepository = null, MovieRepository $movieRepository = null, ServerRepository $serverRepository) {
+	protected function __construct(FileRepository $fileRepository = null, MovieRepository $movieRepository = null) {
 		$this->userRepository = $userRepository;
 		$this->movieRepository = $movieRepository;
 		$this->serverRepository = $serverRepository;
