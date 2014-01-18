@@ -54,6 +54,8 @@
    <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Cover Image</label>
     <div class="col-sm-10">
+    	<img alt="cover" style="height: 75px;" src="<?php echo $baseUrl.'/uploaded-images/'.$this->movie->getCover()->getRealKey()?>">
+    	<div style="clear: both;"></div><br />
     	<input type="file" name="cover" class="form-control">
     </div>
   </div>
@@ -61,6 +63,16 @@
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Screen Shot</label>
     <div class="col-sm-10">
+	    <?php 
+		foreach ($this->movie->getScreenShot() as $screenShot):
+		?>
+			<div style="background-color: #eeee; float: left; width: 100px; padding: 2px; margin: 0px 5px 5px 5px; text-align: center;">
+   			   	<img alt="ss" style="height: 75px;" src="<?php echo $baseUrl.'/uploaded-images/'.$screenShot->getRealKey()?>">
+   			   	<a href="<?php echo $baseUrl.'/manage-processor/delete-image?id='.$this->movie->getId().'&imgId='.$screenShot->getId()?>" class="btn btn-danger btn-xs" onclick="var result=confirm('Are you sure you wanna delete ?'); return result;">delete</a>
+   			   </div>
+		<?php endforeach;	?>
+		<div style="clear: both;"></div><br />
+		Add More Screen Shot
     	<input type="file" name="screenShot[]" multiple="multiple" class="form-control">
     </div>
   </div>
