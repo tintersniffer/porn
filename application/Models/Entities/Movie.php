@@ -3,6 +3,7 @@ namespace Models\Entities;
 
 
 use Doctrine\DBAL\Types\Type;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\MovieRepository")
  * @Table(name="movies")
@@ -44,15 +45,29 @@ class Movie
 	 *  @Column(name="updated_date", type="datetime", nullable=true)
 	 */
 	protected $updatedDate;
-
+	
+	/** @Column(name="high_quality_file", type="string") **/
+	protected $highQualityFile;
+	
+	/** @Column(name="low_quality_file", type="string") **/
+	protected $lowQualityFile;
+	
+	/** @Column(name="cover", type="string") **/
 	/**
 	 *
 	 *
-	 * @var File
-	 * @OneToOne(targetEntity="File")
-	 * @JoinColumn(name="high_quality_file_id", referencedColumnName="id")
+	 * @var Image
+	 * @OneToOne(targetEntity="Image")
+	 * @JoinColumn(name="image_id", referencedColumnName="id")
 	 */
-	protected $highQualityFile;
+	protected $cover;
+	
+	/**
+	 *
+	 * @var ArrayCollection
+	 * @OneToMany(targetEntity="Image", mappedBy="movie", cascade={})
+	 */
+	protected $screenShot;
 	
 	/**
 	 * 
@@ -62,17 +77,6 @@ class Movie
 	 * @JoinColumn(name="category_id", referencedColumnName="id")
 	 */
 	protected $category;
-	
-	/**
-	 * 
-	 * 
-	 * @var File
-	 * @OneToOne(targetEntity="File")
-	 * @JoinColumn(name="low_quality_file_id", referencedColumnName="id")
-	 */
-	protected $lowQualityFile;
-	
-	
 	
 	public function getId() {
 		return $this->id;
@@ -140,24 +144,51 @@ class Movie
 	public function getHighQualityFile() {
 		return $this->highQualityFile;
 	}
-	public function setHighQualityFile(File $highQualityFile) {
+	public function setHighQualityFile($highQualityFile) {
 		$this->highQualityFile = $highQualityFile;
-		return $this;
-	}
-	public function getCategory() {
-		return $this->category;
-	}
-	public function setCategory(Type $category) {
-		$this->category = $category;
 		return $this;
 	}
 	public function getLowQualityFile() {
 		return $this->lowQualityFile;
 	}
-	public function setLowQualityFile(File $lowQualityFile) {
+	public function setLowQualityFile($lowQualityFile) {
 		$this->lowQualityFile = $lowQualityFile;
 		return $this;
 	}
+	public function getCategory() {
+		return $this->category;
+	}
+	public function setCategory($category) {
+		$this->category = $category;
+		return $this;
+	}
+	public function getCover() {
+		return $this->cover;
+	}
+	public function setCover($cover) {
+		$this->cover = $cover;
+		return $this;
+	}
+	public function getScreenShot() {
+		return $this->screenShot;
+	}
+	public function setScreenShot($screenShot) {
+		if(empty($this->screenShot)){
+			$this->screenShot = new ArrayCollection();
+		}
+		
+		foreach ($screenShot as $k=>$image){
+			/* @var $image \Models\Entities\Image */
+			$image->setMovie($this);
+			$this->screenShot->add($image);
+		}		
+		
+		
+		return $this;
+	}
+	
+	
+	
 	
 
 	

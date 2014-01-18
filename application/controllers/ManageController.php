@@ -17,6 +17,13 @@ class ManageController extends Zend_Controller_Action
         $this->forward('movies');
     }
 
+    public function testAction()
+    {
+        // action body
+//         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findAll();
+//         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
+    }
+
     public function serversAction()
     {
         // action body
@@ -62,7 +69,7 @@ class ManageController extends Zend_Controller_Action
     }
 
     public function addNewMovieAction(){
-    	$this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findBy(array('isActive'=>true));
+    	$this->view->categories = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findBy(array('isActive'=>true));
     	$this->view->files = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\File')->findAll();
     }
 
@@ -84,6 +91,7 @@ class ManageController extends Zend_Controller_Action
     public function updateMovieAction(){
     	$id = $this->getRequest()->getParam("id");
     	$this->view->movie = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Movie")->find($id);
+    	$this->view->categories = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findBy(array('isActive'=>true));
     }
  
 }

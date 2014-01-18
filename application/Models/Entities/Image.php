@@ -13,7 +13,7 @@ class Image{
 	private $id;
 	
 	/** @Column(name="is_shared", type="boolean") **/
-	private $isShared;
+	private $isShared = false;
 	
 	/** @Column(name="`key`", type="string", length=6, unique=true, nullable=true) **/
 	private $key;
@@ -42,6 +42,14 @@ class Image{
 	 * @JoinColumn(name="image_ref_id", referencedColumnName="id")
 	 */
 	private $referenceImage;
+	
+	/**
+	 *
+	 * @var Movie
+	 * @ManyToOne(targetEntity="Movie", inversedBy="movies")
+	 * @JoinColumn(name="movie_id", referencedColumnName="id")
+	 */
+	protected $movie;
 
 
 	public function getRealKey(){
@@ -100,10 +108,18 @@ class Image{
 	public function getReferenceImage() {
 		return $this->referenceImage;
 	}
-	public function setReferenceImage(Image $referenceImage) {
+	public function setReferenceImage(  $referenceImage) {
 		$this->referenceImage = $referenceImage;
 		return $this;
 	}
+	public function getMovie() {
+		return $this->movie;
+	}
+	public function setMovie($movie) {
+		$this->movie = $movie;
+		return $this;
+	}
+	
 	
 	
 	

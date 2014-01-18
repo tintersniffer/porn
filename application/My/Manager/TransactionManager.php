@@ -55,6 +55,10 @@ class TransactionManager{
 		aop_add_before($namespace , $before);
 		aop_add_after($namespace, $after);
 		
+		$namespace='public Models\Repositories\*Repository->sav*()';
+		aop_add_before($namespace , $before);
+		aop_add_after($namespace, $after);
+		
 // 		aop_add_after_throwing('IndexController->test()', $exception);
 	}
 	

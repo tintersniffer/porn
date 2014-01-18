@@ -39,7 +39,11 @@ Zend_Session::start();
 
 /* setup Cache System */
 MyEntityManagerFactory::$isUpdateSchema = true;
+<<<<<<< HEAD
 MyCache::$namespacePrefix = "ns1";
+=======
+MyCache::$namespacePrefix = "ns6";
+>>>>>>> branch 'master' of https://github.com/evilband7/porn.git
 
 MyCache::setType(MyCache::$TYPE_ARRAY);
 

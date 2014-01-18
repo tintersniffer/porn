@@ -1,7 +1,7 @@
 <?php 
 	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 ?>
-<a href="<?php echo "$baseUrl/manage/add-new-type";?>" class="btn btn-primary">Add new type</a>
+<a href="<?php echo "$baseUrl/manage/add-new-type";?>" class="btn btn-primary">Add new Category</a>
 <br /><br />
 <table class="table table-bordered table-condense">
 	<thead>
@@ -24,8 +24,8 @@
 			<?php if(!$type->getIsActive()){?>
 				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-type?id=".$type->getId();?>" class="btn btn-primary">Restore</a></td>
 			<?php }else{?>
-				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-type?id=".$type->getId();?>" class="btn btn-primary">Update</a>
-			 	<a href="<?php echo "$baseUrl/manage-processor/delete-type?id=".$type->getId();?>" class="btn btn-primary">Delete</a></td>
+				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-type?id=".$type->getId();?>" class="btn btn-info">Update</a>
+			 	<a href="<?php echo "$baseUrl/manage-processor/delete-type?id=".$type->getId();?>" class="btn btn-danger">Delete</a></td>
 			<?php }?>
 			</tr>	
 	<?php 

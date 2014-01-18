@@ -3,17 +3,18 @@
 ?>
 
 <div id="view-content">
-	<a href="<?php echo "$baseUrl/manage/add-new-movie";?>" class="btn btn-primary">Add new movie</a>
+	<a href="<?php echo "$baseUrl/manage/add-new-movie";?>" class="btn btn-primary">Add new Movie</a>
 </div>
+
 <br />
 <table class="table table-bordered table-condense">
 	<thead>
 		<tr>
-			<th width="20%">Name</th>
+			<th width="20%">Movie Name</th>
 			<th width="20%">Friendly Name</th>
 			<th width="30%">Description</th>
-			<th width="10%">Type</th>
-			<th width="20%">action</th>
+			<th width="10%">Category</th>
+			<th width="20%">&nbsp;</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,12 +26,12 @@
 			<td><?php echo $movie->getMovieName() ?></td>
 			<td><?php echo $movie->getFriendlyName() ?></td>
 			<td><?php echo $movie->getDescription() ?></td>
-			<td>type</td>
+			<td><?php echo $movie->getCategory()->getName() ?></td>
 			<?php if(!$movie->getIsActive()){?>
 				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-movie?id=".$movie->getId();?>" class="btn btn-primary">Restore</a></td>
 			<?php }else{?>
-				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-movie?id=".$movie->getId();?>" class="btn btn-primary">Update</a>
-			 	<a href="<?php echo "$baseUrl/manage-processor/delete-movie?id=".$movie->getId();?>" class="btn btn-primary">Delete</a></td>
+				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-movie?id=".$movie->getId();?>" class="btn btn-info">Update</a>
+			 	<a href="<?php echo "$baseUrl/manage-processor/delete-movie?id=".$movie->getId();?>" class="btn btn-danger">Delete</a></td>
 			<?php }?>
 			</tr>	
 	<?php 

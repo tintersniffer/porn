@@ -7,7 +7,7 @@ use My\Generator\MyStringGenerator;
 use Models\Entities\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class FileRepository extends AbstractRepository{
+class ImageRepository extends AbstractRepository{
 	
 	/**
 	 * 
@@ -26,9 +26,9 @@ class FileRepository extends AbstractRepository{
 		$md5 = md5_file ( $tmp );
 		
 		
-		$image = new Image ();
+		$image = new Image();
 		
-		$md5Check = $this->findBy(array('md5'=>$md5));
+		$md5Check = $this->findOneBy(array('md5'=>$md5));
 		if (empty ( $md5Check )) {
 			$image->setMd5 ( $md5 );
 			$image->setSizeKb ( floatval ( $size / 1024 ) );
@@ -66,7 +66,7 @@ class FileRepository extends AbstractRepository{
 			
 			$image = new Image ();
 			
-			$md5Check = $this->findBy(array('md5'=>$md5));
+			$md5Check = $this->findOneBy(array('md5'=>$md5));
 			if (empty ( $md5Check )) {
 				$image->setMd5 ( $md5 );
 				$image->setSizeKb ( floatval ( $size / 1024 ) );
