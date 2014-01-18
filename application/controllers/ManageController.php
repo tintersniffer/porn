@@ -17,6 +17,13 @@ class ManageController extends Zend_Controller_Action
         $this->forward('movies');
     }
 
+    public function testAction()
+    {
+        // action body
+//         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findAll();
+//         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
+    }
+
     public function serversAction()
     {
         // action body
@@ -27,7 +34,7 @@ class ManageController extends Zend_Controller_Action
     public function typesAction()
     {
         // action body
-        $this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type')->findAll();
+        $this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findAll();
 //         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
     }
 
@@ -62,7 +69,7 @@ class ManageController extends Zend_Controller_Action
     }
 
     public function addNewMovieAction(){
-    	$this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Type')->findBy(array('isActive'=>true));
+    	$this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findBy(array('isActive'=>true));
     	$this->view->files = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\File')->findAll();
     }
 
@@ -78,7 +85,7 @@ class ManageController extends Zend_Controller_Action
 
     public function updateTypeAction(){
     	$id = $this->getRequest()->getParam("id");
-    	$this->view->type = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Type")->find($id);
+    	$this->view->type = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\Category")->find($id);
     }
 
     public function updateMovieAction(){

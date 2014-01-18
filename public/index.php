@@ -55,10 +55,10 @@ MyDatabaseConfiguration::$databaseName = 'swim';
 MyDatabaseConfiguration::$databaseUserName = 'root';
 MyDatabaseConfiguration::$databasePassword = 'adminadmin';
 
-// MyDatabaseConfiguration::$databaseHost = 'localhost'; 
-// MyDatabaseConfiguration::$databaseName = 'mapz_porn';
-// MyDatabaseConfiguration::$databaseUserName = 'mapz_dev';
-// MyDatabaseConfiguration::$databasePassword = 'adminP@12w0rd';
+MyDatabaseConfiguration::$databaseHost = 'localhost'; 
+MyDatabaseConfiguration::$databaseName = 'mapz_porn';
+MyDatabaseConfiguration::$databaseUserName = 'mapz_dev';
+MyDatabaseConfiguration::$databasePassword = 'adminP@12w0rd';
 
 TransactionManager::start();
 
