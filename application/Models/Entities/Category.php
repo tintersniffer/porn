@@ -19,6 +19,9 @@ Class Category
 	/** @Column(name="description", type="string") **/
 	protected $description;
 	
+	/** @Column(name="sorting_order", type="integer") **/
+	protected $sortingOrder;
+	
 	/** @Column(name="is_active", type="boolean", nullable=false) **/
 	protected  $isActive = true; 
 	
@@ -34,9 +37,6 @@ Class Category
 	 *  @Column(name="updated_date", type="datetime", nullable=true)
 	 */
 	protected $updatedDate;
-	
-	/** @Column(name="`order`", type="integer") **/
-	protected $order = 5;
 	
 	
 	public function getId() {
@@ -81,11 +81,11 @@ Class Category
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
-	public function getOrder() {
-		return $this->order;
+	public function getSortingOrder() {
+		return $this->sortingOrder;
 	}
-	public function setOrder($order) {
-		$this->order = $order;
+	public function setSortingOrder($sortingOrder) {
+		$this->sortingOrder = $sortingOrder;
 		return $this;
 	}
 	

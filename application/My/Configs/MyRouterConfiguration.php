@@ -6,8 +6,8 @@ class MyRouterConfiguration{
 		$router =  new \Zend_Controller_Router_Rewrite();
 		
 		$routes = array();
-		$routes['watch'] = new \Zend_Controller_Router_Route('watch/:videoKey', array('controller'=>'video', 'action'=>'watch', 'videoKey'=>"none"));
-		$routes['source'] = new \Zend_Controller_Router_Route('get/:videoKey', array('controller'=>'video', 'action'=>'get', 'videoKey'=>"none"));
+		$routes['watch'] = new \Zend_Controller_Router_Route('watch/:id/:name', array('controller'=>'watch', 'action'=>'index', 'id'=>"0", 'name'=>''));
+		$routes['category'] = new \Zend_Controller_Router_Route('category/:id/:name', array('controller'=>'category', 'action'=>'index', 'id'=>"0", 'name'=>''));
 		
 		$router->addRoutes($routes);
 		return $router;

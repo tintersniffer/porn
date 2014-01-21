@@ -46,10 +46,10 @@ class Movie
 	 */
 	protected $updatedDate;
 	
-	/** @Column(name="high_quality_file", type="string") **/
+	/** @Column(name="high_quality_file", type="string", length=65535 ) **/
 	protected $highQualityFile;
 	
-	/** @Column(name="low_quality_file", type="string") **/
+	/** @Column(name="low_quality_file", type="string", length=65535 ) **/
 	protected $lowQualityFile;
 	
 	/** @Column(name="cover", type="string") **/

@@ -7,8 +7,8 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 ?>
 <header style="/*margin-left: -15px;*/ position: relative;">
 	<div style="float:left;">
-		<a href="design.php">
-		<img src="img/logo.png" style="height: 100px;">
+		<a href="<?php echo "$baseUrl";?>">
+		<img alt="" src="<?php echo "$baseUrl/img/logo.png";?>" style="height: 100px;">
 		</a>
 	</div>
 	<div style="width: 320px; position: absolute; right: 0px; bottom: 55px; z-index: 100;">
