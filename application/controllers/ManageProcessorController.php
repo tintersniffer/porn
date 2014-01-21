@@ -66,6 +66,7 @@ class ManageProcessorController extends Zend_Controller_Action
 // 		$type->setTypeName($this->getRequest()->getPost('type'));
 		$type->setName($this->getRequest()->getPost('type'));
 		$type->setDescription($this->getRequest()->getPost('description'));
+		$type->setSortingOrder($this->getRequest()->getPost('sortingOrder'));
 		$currentDate = new DateTime();
 		$type->setCreatedDate($currentDate);
 		$type->setIsActive(true);
@@ -84,6 +85,7 @@ class ManageProcessorController extends Zend_Controller_Action
 		$type = MyEntityManagerFactory::getEntityManager()->getRepository("\\Models\\Entities\\Category")->find($id);
 		$type->setName($this->getRequest()->getPost('type'));
 		$type->setDescription($this->getRequest()->getPost('description'));
+		$type->setSortingOrder($this->getRequest()->getPost('sortingOrder'));
 		$currentDate = new DateTime();
 		$type->setUpdatedDate($currentDate);
 		Zend_Debug::dump($type);
