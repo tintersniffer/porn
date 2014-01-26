@@ -130,11 +130,10 @@ class ManageProcessorController extends Zend_Controller_Action
 		$movie->setDescription($this->getRequest()->getPost('description'));
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
-		$movie->setHighQualityFile($this->getRequest()->getPost('highQualityFile'));
-		$movie->setLowQualityFile($this->getRequest()->getPost('lowQualityFile'));
-		
-		
-		
+		$sourceUrl = $this->getRequest()->getPost('realUrl');
+		$vs = VideoService::getInstance();
+		$vids = $vs->getRealVideo($sourceUrl);
+		die($vids);
 		
 		$currentDate = new DateTime();
 		$movie->setCreatedDate($currentDate);

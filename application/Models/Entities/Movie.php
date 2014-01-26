@@ -46,11 +46,11 @@ class Movie
 	 */
 	protected $updatedDate;
 	
-	/** @Column(name="high_quality_file", type="string") **/
-	protected $highQualityFile;
+	/** @Column(name="real_url", type="string") **/
+	protected $realUrl;
 	
-	/** @Column(name="low_quality_file", type="string") **/
-	protected $lowQualityFile;
+	/** @Column(name="processed_url", type="string") **/
+	protected $processedUrl;
 	
 	/** @Column(name="cover", type="string") **/
 	/**
@@ -141,20 +141,8 @@ class Movie
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
-	public function getHighQualityFile() {
-		return $this->highQualityFile;
-	}
-	public function setHighQualityFile($highQualityFile) {
-		$this->highQualityFile = $highQualityFile;
-		return $this;
-	}
-	public function getLowQualityFile() {
-		return $this->lowQualityFile;
-	}
-	public function setLowQualityFile($lowQualityFile) {
-		$this->lowQualityFile = $lowQualityFile;
-		return $this;
-	}
+	
+	
 	public function getCategory() {
 		return $this->category;
 	}
@@ -186,6 +174,21 @@ class Movie
 		
 		return $this;
 	}
+	public function getRealUrl() {
+		return $this->realUrl;
+	}
+	public function setRealUrl($realUrl) {
+		$this->realUrl = $realUrl;
+		return $this;
+	}
+	public function getProcessedUrl() {
+		return $this->processedUrl;
+	}
+	public function setProcessedUrl($processedUrl) {
+		$this->processedUrl = $processedUrl;
+		return $this;
+	}
+	
 	
 	
 	

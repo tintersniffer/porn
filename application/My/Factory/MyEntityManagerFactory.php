@@ -36,8 +36,8 @@ class MyEntityManagerFactory{
 			if(static::$isUpdateSchema){
 				$schemaTool = new SchemaTool(self::$em);
 				$classes = self::$em->getMetadataFactory()->getAllMetadata();
-// 				$schemaTool->dropSchema($classes);
-// 				$schemaTool->createSchema($classes);				
+				$schemaTool->dropSchema($classes);
+				$schemaTool->createSchema($classes);				
 				$schemaTool->updateSchema($classes);
 				
 				
