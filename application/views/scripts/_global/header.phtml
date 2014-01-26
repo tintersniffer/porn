@@ -1,7 +1,7 @@
 <?php 
 	use My\Factory\MyEntityManagerFactory;
 $repo = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category');
-$cats = $repo->findBy(array('isActive'=>true), array('order'=>'asc'));
+$cats = $repo->findBy(array('isActive'=>true), array('sortingOrder'=>'asc'));
 $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
 ?>

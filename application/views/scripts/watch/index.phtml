@@ -1,0 +1,68 @@
+<?php 
+	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+	/* @var $movie \Models\Entities\Movie */
+	$movie = $this->movie;
+	$cover = $movie->getCover() ? "$baseUrl/uploaded-images/{$movie->getCover()->getRealKey()}": "$baseUrl/images/no-cover.jpg";
+?>
+
+<section>
+	<h4 style="margin-bottom: 20px; margin-top: 20px;">NEW VIDEOS - This
+		page is updated everyday with new pron videos!</h4>
+	<div class="row" style="margin-bottom: 30px;">
+		<div class="col-xs-9" style="">
+			<div style="margin-left: 30px;">
+			<video id="example_video_1" class="video-js vjs-default-skin"
+				controls preload="auto" width="640" height="360"
+				poster="<?php echo $cover?>"
+				data-setup='{"example_option":true}'>
+				<source src="http://r2---sn-30a7en7z.googlevideo.com/videoplayback?id=ed08610256a25fd1&itag=22&source=picasa"
+					type='video/mp4' />
+			</video>
+			</div>
+	
+		<?php 
+		
+			
+			foreach (array() as $movie):
+			break;
+			$cover = $movie->getCover() ? "$baseUrl/uploaded-images/{$movie->getCover()->getRealKey()}": "$baseUrl/images/no-cover.jpg";
+			?>
+			
+		<div class="movie movie-thumbnail">
+				<img src="<?php echo "$cover"?>"
+					alt="Cover image of <?php echo $movie->getMovieName()?>"
+					class="img-thumbnail" style="width: 98%;">
+				<p style="padding: 5px 10px;">
+					<a
+						href="<?php echo "$baseUrl/watch/{$movie->getId()}/{$movie->getFriendlyName()}"?>">
+					<?php echo $movie->getMovieName()?>
+				</a>
+				</p>
+			</div>
+			
+			<?php 	
+			endforeach;
+		?>
+		
+		
+		<div style="clear: both; width: 100%; position: relative; margin-top: 100px;">
+			<?php include 'ad2.php';?>
+		</div>
+
+		</div>
+		<div class="col-xs-3">
+		<?php include 'ad1.php';?>
+	</div>
+	</div>
+
+
+
+</section>
+
+<script>
+	addDocumentReady(function(){
+		$('.movie').click(function(){
+			window.location.href=$(this).find('a').attr('href');
+		});
+	});
+</script>
