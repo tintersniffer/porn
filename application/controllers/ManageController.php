@@ -9,7 +9,10 @@ class ManageController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
-    	MyLayoutManager::getInstance()->setLayoutFileName("backend.phtml");
+    	$lm = MyLayoutManager::getInstance();
+    	$lm->setLayoutFileName("backend.phtml");
+    	$lm->setTitle('ระบบหลังบ้านจ้า');
+    	
     }
 
     public function indexAction()

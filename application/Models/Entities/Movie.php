@@ -46,11 +46,21 @@ class Movie
 	 */
 	protected $updatedDate;
 	
+<<<<<<< HEAD
 	/** @Column(name="real_url", type="string") **/
 	protected $realUrl;
+=======
+	/** @Column(name="high_quality_file", type="string", length=65535 ) **/
+	protected $highQualityFile;
+>>>>>>> refs/remotes/origin/master
 	
+<<<<<<< HEAD
 	/** @Column(name="processed_url", type="string") **/
 	protected $processedUrl;
+=======
+	/** @Column(name="low_quality_file", type="string", length=65535 ) **/
+	protected $lowQualityFile;
+>>>>>>> refs/remotes/origin/master
 	
 	/** @Column(name="cover", type="string") **/
 	/**
