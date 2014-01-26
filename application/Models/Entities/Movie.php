@@ -55,22 +55,11 @@ class Movie
 	protected $processedUrl;
 	
 	
+	/** @Column(name="cover_url", type="string") **/
+	protected $coverUrl;
 	
-	/**
-	 *
-	 *
-	 * @var Image
-	 * @OneToOne(targetEntity="Image")
-	 * @JoinColumn(name="image_id", referencedColumnName="id")
-	 */
-	protected $cover;
-	
-	/**
-	 *
-	 * @var ArrayCollection
-	 * @OneToMany(targetEntity="Image", mappedBy="movie", cascade={})
-	 */
-	protected $screenShot;
+	/** @Column(name="screen_shot_url", type="string") **/
+	protected $screenShotUrl;
 	
 	/**
 	 * 
@@ -153,30 +142,8 @@ class Movie
 		$this->category = $category;
 		return $this;
 	}
-	public function getCover() {
-		return $this->cover;
-	}
-	public function setCover($cover) {
-		$this->cover = $cover;
-		return $this;
-	}
-	public function getScreenShot() {
-		return $this->screenShot;
-	}
-	public function setScreenShot($screenShot) {
-		if(empty($this->screenShot)){
-			$this->screenShot = new ArrayCollection();
-		}
-		
-		foreach ($screenShot as $k=>$image){
-			/* @var $image \Models\Entities\Image */
-			$image->setMovie($this);
-			$this->screenShot->add($image);
-		}		
-		
-		
-		return $this;
-	}
+	
+	
 	public function getRealUrl() {
 		return $this->realUrl;
 	}
@@ -191,12 +158,21 @@ class Movie
 		$this->processedUrl = $processedUrl;
 		return $this;
 	}
+	public function getCoverUrl() {
+		return $this->coverUrl;
+	}
+	public function setCoverUrl($coverUrl) {
+		$this->coverUrl = $coverUrl;
+		return $this;
+	}
+	public function getScreenShotUrl() {
+		return $this->screenShotUrl;
+	}
+	public function setScreenShotUrl($screenShotUrl) {
+		$this->screenShotUrl = $screenShotUrl;
+		return $this;
+	}
 	
-	
-	
-	
-	
-
 	
 	
 	

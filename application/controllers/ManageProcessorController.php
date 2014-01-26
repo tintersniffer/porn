@@ -5,6 +5,7 @@ use My\Factory\MyEntityManagerFactory;
 use My\Manager\MyLayoutManager;
 use Models\Entities\Type;
 use Models\Entities\Movie;
+use Models\Services\VideoService;
 use Models\Entities\Category;
 class ManageProcessorController extends Zend_Controller_Action
 {
@@ -130,25 +131,20 @@ class ManageProcessorController extends Zend_Controller_Action
 		$movie->setDescription($this->getRequest()->getPost('description'));
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
-		$sourceUrl = $this->getRequest()->getPost('realUrl');
+		$realUrl = $this->getRequest()->getPost('realUrl');
 		$vs = VideoService::getInstance();
-		$vids = $vs->getRealVideo($sourceUrl);
-		die($vids);
+		$vids = $vs->getRealVideo($realUrl);
+		$movie->setRealUrl($realUrl);
+		$movie->setProcessedUrl(serialize($vids));
 		
 		$currentDate = new DateTime();
 		$movie->setCreatedDate($currentDate);
 		$movie->setUpdatedDate($currentDate);
 		$movie->setIsActive(true);
+
+		$movie->setCoverUrl($this->getRequest()->getPost('cover'));
+		$movie->setScreenShotUrl($this->getRequest()->getPost('screenShot'));
 		$movieRepo->save($movie);
-		
-		if($_FILES ['cover'] ['name']!=""){
-			$cover = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveImage('cover');
-			$movie->setCover($cover);
-		}
-		if($_FILES ['screenShot'] ['name'][0]!=""){
-			$screenShot = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveMultipleImages('screenShot');
-			$movie->setScreenShot($screenShot);
-		}
 		
 		
 		$url = '/manage/movies';
@@ -168,29 +164,18 @@ class ManageProcessorController extends Zend_Controller_Action
 		$movie->setDescription($this->getRequest()->getPost('description'));
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
-		$movie->setHighQualityFile($this->getRequest()->getPost('highQualityFile'));
-		$movie->setLowQualityFile($this->getRequest()->getPost('lowQualityFile'));
+		$realUrl = $this->getRequest()->getPost('realUrl');
+		$vs = VideoService::getInstance();
+		$vids = $vs->getRealVideo($realUrl);
+		$movie->setRealUrl($realUrl);
+		$movie->setProcessedUrl(serialize($vids));
 		
 		
 		$currentDate = new DateTime();
 		$movie->setUpdatedDate($currentDate);
 		$movie->setIsActive(true);
-		
-		if($_FILES ['cover'] ['name']!=""){
-			$cover = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveImage('cover');
-			$movie->setCover($cover);
-		}
-		
-		if($_FILES ['screenShot'] ['name'][0]!=""){
-// 			MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->
-// 			foreach ($movie->getScreenShot() as $screenShotObj){
-// 				$image = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->find($screenShotObj->getId());
-// 				$image->setMovie(null);
-// 			}
-			$screenShot = MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Image')->saveMultipleImages('screenShot');
-			$movie->setScreenShot($screenShot);
-		}
-		
+		$movie->setCoverUrl($this->getRequest()->getPost('cover'));
+		$movie->setScreenShotUrl($this->getRequest()->getPost('screenShot'));
 		//Die();
 		$url = '/manage/movies';
 		$this->redirect($url);
