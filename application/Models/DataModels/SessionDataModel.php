@@ -24,11 +24,13 @@ class SessionDataModel{
 			$userRepository = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\User');
 			$this->myUser = $userRepository->find($userId);
 		}
-		return $this->user;
+		return $this->myUser;
 	}
 	public function setMyUser(User $myUser) {
 		$this->myUser = $myUser;
-		$this->_setMyUserId($myUser->getId());
+// 		$this->_setMyUserId($myUser->getId());
+		$this->_session->myUserId = $myUser->getId();
+		\Zend_Debug::dump($_SESSION);
 		return $this;
 	}
 	
@@ -62,7 +64,7 @@ class SessionDataModel{
 	 */
 	private $_session;
 	private function __construct(){
-		\Zend_Session::start();
+// 		\Zend_Session::start();
 		$this->_session = new \Zend_Session_Namespace();
 		$this->_session->setExpirationSeconds(1200);
 	}
@@ -70,10 +72,10 @@ class SessionDataModel{
 	
 	
 	private function _getMyUserId(){
-		return $this->session->myUserId;
+		return $this->_session->myUserId;
 	}
 	private function _setMyUserId($id){
-		$this->session->myUserId = $id;
+		$this->_session->myUserId = $id;
 	}
 	
 	

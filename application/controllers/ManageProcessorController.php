@@ -4,6 +4,7 @@ use Models\Entities\Server;
 use My\Factory\MyEntityManagerFactory;
 use My\Manager\MyLayoutManager;
 use Models\Entities\Type;
+use Models\DataModels\SessionDataModel;
 use Models\Entities\Movie;
 use Models\Services\VideoService;
 use Models\Entities\Category;
@@ -14,6 +15,16 @@ class ManageProcessorController extends Zend_Controller_Action
 	{
 		/* Initialize action controller here */
 		MyLayoutManager::getInstance()->setLayoutFileName("backend.phtml");
+		$session = SessionDataModel::getInstance();
+		
+		if($this->getParam('action')!='login')
+		{
+			$user = $session->getMyUser();
+			if($user==null){
+				$url = '/manage/login';
+				$this->redirect($url);
+			}
+		}
 	}
 	
 	public function indexAction()
@@ -274,8 +285,13 @@ class ManageProcessorController extends Zend_Controller_Action
 	public function loginAction(){
 		$username = $this->getRequest()->getParam('username');
 		$password = md5($this->getRequest()->getParam('password'));
-		$user = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\User")->findBy(array('user'=>$username,'password'=>$password));
-		print_r($user);die(555);
+		$user = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\User")->findOneBy(array('username'=>$username,'password'=>$password));
+				
+		
+		$session = SessionDataModel::getInstance();
+		if($user){
+			$session->setMyUser($user);
+		}
 		$url = '/manage/movies';
 		$this->redirect($url);
 	}

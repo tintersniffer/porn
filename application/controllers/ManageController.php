@@ -3,6 +3,7 @@
 use My\Manager\MyLayoutManager;
 use Models\Services\BackendManagementService;
 use My\Factory\MyEntityManagerFactory;
+use Models\DataModels\SessionDataModel;
 class ManageController extends Zend_Controller_Action
 {
 
@@ -10,9 +11,18 @@ class ManageController extends Zend_Controller_Action
     {
         /* Initialize action controller here */
     	$lm = MyLayoutManager::getInstance();
-    	$lm->setLayoutFileName("backend.phtml");
+    	$lm->setLayoutFileName("backend.phtml");  	
     	$lm->setTitle('ระบบหลังบ้านจ้า');
     	
+		$session = SessionDataModel::getInstance();
+    	if($this->getParam('action')!='login')
+    	{
+    		$user = $session->getMyUser();
+    		if($user==null){
+    			$url = '/manage/login';
+    			$this->redirect($url);
+    		}
+    	}
     }
 
     public function indexAction()

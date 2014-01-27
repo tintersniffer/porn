@@ -37,16 +37,11 @@ class MyEntityManagerFactory{
 				$schemaTool = new SchemaTool(self::$em);
 				$classes = self::$em->getMetadataFactory()->getAllMetadata();
 // 				$schemaTool->dropSchema($classes);
-// 				$schemaTool->createSchema($classes);				
-<<<<<<< HEAD
+// 				$schemaTool->createSchema($classes);	
 				$schemaTool->updateSchema($classes);
-=======
-// 				$schemaTool->updateSchema($classes);
 
 				
 				
-				
->>>>>>> refs/remotes/origin/master
 			}
 			
 			
