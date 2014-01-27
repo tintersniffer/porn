@@ -64,12 +64,11 @@ class Movie
 	/**
 	 * 
 	 * 
-	 * @var Type
+	 * @var Category
 	 * @ManyToOne(targetEntity="Category")
 	 * @JoinColumn(name="category_id", referencedColumnName="id")
 	 */
 	protected $category;
-	
 	public function getId() {
 		return $this->id;
 	}
@@ -133,17 +132,6 @@ class Movie
 		$this->updatedDate = $updatedDate;
 		return $this;
 	}
-	
-	
-	public function getCategory() {
-		return $this->category;
-	}
-	public function setCategory($category) {
-		$this->category = $category;
-		return $this;
-	}
-	
-	
 	public function getRealUrl() {
 		return $this->realUrl;
 	}
@@ -172,7 +160,17 @@ class Movie
 		$this->screenShotUrl = $screenShotUrl;
 		return $this;
 	}
+	public function getCategory() {
+		return $this->category;
+	}
+	public function setCategory(Category $category) {
+		$this->category = $category;
+		return $this;
+	}
 	
+	
+
+
 	
 	
 	
