@@ -11,7 +11,8 @@
 		
 			/* @var $movie \Models\Entities\Movie */
 			foreach ($this->movies as $movie):
-			$cover = $movie->getCover() ? "$baseUrl/uploaded-images/{$movie->getCover()->getRealKey()}": "$baseUrl/images/no-cover.jpg";
+// 			$cover = $movie->getCover() ? "$baseUrl/uploaded-images/{$movie->getCover()->getRealKey()}": "$baseUrl/images/no-cover.jpg";
+			$cover = $movie->getCoverUrl();
 			?>
 			
 		<div class="movie movie-thumbnail">			

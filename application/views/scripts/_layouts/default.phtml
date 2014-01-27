@@ -19,7 +19,8 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
 <link href="<?php echo $baseUrl;?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <link href="<?php echo $baseUrl;?>/bootstrap/css/non-responsive.css" rel="stylesheet" />
-<link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
+<link href="<?php echo $baseUrl;?>/video-js/video-js.min.css" rel="stylesheet">
+<link href="<?php echo $baseUrl;?>/video-js-res/video-js-resolutions.css" rel="stylesheet">
 <link href="<?php echo $baseUrl;?>/css/front.css" rel="stylesheet" />
 <?php echo $layoutManager->getAdditionalCssString()?>
 <?php echo $layoutManager->getAdditionalHeaderTagString()?>
@@ -42,7 +43,8 @@ $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
 <script src="<?php echo $baseUrl;?>/js/jquery.js"></script>
 <script src="<?php echo $baseUrl;?>/bootstrap/js/bootstrap.min.js"></script>
-<script src="//vjs.zencdn.net/4.2/video.js"></script>
+<script src="<?php echo $baseUrl;?>/video-js/video.dev.js"></script>
+<script src="<?php echo $baseUrl;?>/video-js-res/video-js-resolutions.js"></script>
 <script src="<?php echo $baseUrl;?>/js/front.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {

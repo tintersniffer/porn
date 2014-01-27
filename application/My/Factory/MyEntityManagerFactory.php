@@ -38,7 +38,8 @@ class MyEntityManagerFactory{
 				$classes = self::$em->getMetadataFactory()->getAllMetadata();
 // 				$schemaTool->dropSchema($classes);
 // 				$schemaTool->createSchema($classes);				
-				$schemaTool->updateSchema($classes);
+// 				$schemaTool->updateSchema($classes);
+
 				
 				
 				
