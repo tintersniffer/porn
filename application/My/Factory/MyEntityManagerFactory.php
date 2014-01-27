@@ -39,9 +39,6 @@ class MyEntityManagerFactory{
 // 				$schemaTool->dropSchema($classes);
 // 				$schemaTool->createSchema($classes);				
 				$schemaTool->updateSchema($classes);
-				
-				
-				
 			}
 			
 			

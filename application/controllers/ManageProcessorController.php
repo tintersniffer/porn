@@ -270,5 +270,14 @@ class ManageProcessorController extends Zend_Controller_Action
 	public function uploadNewMovieAction(){
 		die("444");
 	}
+	
+	public function loginAction(){
+		$username = $this->getRequest()->getParam('username');
+		$password = md5($this->getRequest()->getParam('password'));
+		$user = MyEntityManagerFactory::getEntityManager()->getRepository("\Models\Entities\User")->findBy(array('user'=>$username,'password'=>$password));
+		print_r($user);die(555);
+		$url = '/manage/movies';
+		$this->redirect($url);
+	}
 }
 

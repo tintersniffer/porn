@@ -5,7 +5,7 @@
 <br /><br />
 <table class="table table-bordered table-condense">
 	<thead>
-		<tr style="background-color: #8e44ad;color:white;">
+		<tr>
 			<th width="30%">Name</th>
 			<th width="40%">Description</th>
 			<th width="10%">Sorting</th>
@@ -14,12 +14,10 @@
 	</thead>
 	<tbody>
 	<?php 
-	$i = 0;
-	$bgColor = "#9b59b6";
 	foreach ($this->types as $type):
 	/* @var $type \Models\Entities\Type */
 	?>
-		<tr <?php if(! $type->getIsActive()) echo 'class="danger"';?> <?php if(($i++)%2!=0) echo 'style="background-color:'.$bgColor.'";' ?>>
+		<tr>
 			<td><?php echo $type->getName() ?></td>
 			<td><?php echo $type->getDescription() ?></td>
 			<td><?php echo $type->getSortingOrder() ?></td>

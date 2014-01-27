@@ -9,7 +9,7 @@
 <br />
 <table class="table table-bordered table-condense">
 	<thead>
-		<tr style="background-color: #8e44ad;color:white;">
+		<tr>
 			<th width="20%">Movie Name</th>
 			<th width="20%">Friendly Name</th>
 			<th width="30%">Description</th>
@@ -19,12 +19,10 @@
 	</thead>
 	<tbody>
 	<?php 
-	$i = 0;
-	$bgColor = "#9b59b6";
 	foreach ($this->movies as $movie):
 	/* @var $movie \Models\Entities\Movie */
 	?>
-		<tr <?php if(! $movie->getIsActive()) echo 'class="danger"';?> <?php if(($i++)%2!=0) echo 'style="background-color:'.$bgColor.'";' ?>>
+		<tr>
 			<td><?php echo $movie->getMovieName() ?></td>
 			<td><?php echo $movie->getFriendlyName() ?></td>
 			<td><?php echo $movie->getDescription() ?></td>
