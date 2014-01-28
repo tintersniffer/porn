@@ -2,8 +2,6 @@
 namespace My\Manager;
 use Doctrine\ORM\EntityManager;
 use My\Factory\MyEntityManagerFactory;
-use My\Illusion\aop_add_before;
-
 
 class TransactionManager{
 	
@@ -21,7 +19,6 @@ class TransactionManager{
 		
 		
 		$before = function($jp) use($em) {
-// 			echo "AOP:BEFORE";
 			TransactionManager::$_stateData[++TransactionManager::$_stateIndex] = 1;
 			$em->flush();
 			$em->beginTransaction();
@@ -30,11 +27,9 @@ class TransactionManager{
 		$after = function ($jp) use($em) {			
 			
 			if ($jp->getException ()!==null) {
-// 				echo "AOP:EXCEPTION";
 				TransactionManager::$_stateData [TransactionManager::$_stateIndex] = 2;
 				$em->rollback();
 			} else {
-// 				echo "AOP:AFTER";
 				if (TransactionManager::$_stateData [TransactionManager::$_stateIndex]===1) {
 					$em->flush();
 					$em->commit ();
@@ -43,7 +38,6 @@ class TransactionManager{
 				}
 				TransactionManager::$_stateIndex--;
 			}			
-// 			
 		};	
 		
 		$namespace='*Controller->*Action()';		
@@ -57,9 +51,7 @@ class TransactionManager{
 		
 		$namespace='public Models\Repositories\*Repository->sav*()';
 		aop_add_before($namespace , $before);
-		aop_add_after($namespace, $after);
-		
-// 		aop_add_after_throwing('IndexController->test()', $exception);
+		aop_add_after($namespace, $after);		
 	}
 	
 	public static $_stateData = array();

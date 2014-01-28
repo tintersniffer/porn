@@ -31,9 +31,9 @@ $loader->registerNamespace("Models\\");
 
 
 /** Zend_Session */
-Zend_Session::setOptions(array(
-'cookie_lifetime' => 1200,
-'gc_maxlifetime'  => 1200));
+// Zend_Session::setOptions(array(
+// 'cookie_lifetime' => 1200,
+// 'gc_maxlifetime'  => 1200));
 Zend_Session::start();
 
 
