@@ -22,10 +22,10 @@
 			<td><?php echo $type->getDescription() ?></td>
 			<td><?php echo $type->getSortingOrder() ?></td>
 			<?php if(!$type->getIsActive()){?>
-				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-type?id=".$type->getId();?>" class="btn btn-primary">Restore</a></td>
+				<td class="text-center"><a href="<?php echo "$baseUrl/manage-processor/restore-type?id=".$type->getId();?>" class="btn btn-primary btn-xs">Restore</a></td>
 			<?php }else{?>
-				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-type?id=".$type->getId();?>" class="btn btn-info">Update</a>
-			 	<a href="<?php echo "$baseUrl/manage-processor/delete-type?id=".$type->getId();?>" class="btn btn-danger">Delete</a></td>
+				<td class="text-center"><a href="<?php echo "$baseUrl/manage/update-type?id=".$type->getId();?>" class="btn btn-info btn-xs">Update</a>
+			 	<a href="<?php echo "$baseUrl/manage-processor/delete-type?id=".$type->getId();?>" class="btn btn-danger btn-xs">Delete</a></td>
 			<?php }?>
 			</tr>	
 	<?php 

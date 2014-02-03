@@ -83,7 +83,7 @@ class ManageController extends Zend_Controller_Action
 
     public function addNewMovieAction(){
     	$this->view->categories = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findBy(array('isActive'=>true));
-    	$this->view->files = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\File')->findAll();
+    	//$this->view->files = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\File')->findAll();
     }
 
     public function uploadNewMovieAction(){

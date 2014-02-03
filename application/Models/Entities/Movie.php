@@ -4,12 +4,19 @@ namespace Models\Entities;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Common\Collections\ArrayCollection;
+use Models\Services\VideoService;
 /**
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\MovieRepository")
- * @Table(name="movies")
+ * @Table(name="movies", indexes=
+ * {
+ *    @index(name="category_idx", columns={"category_id"})
+ * })
+ * @HasLifecycleCallbacks
  */
 class Movie
 {
+	
+	
     /** @Id
 	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
@@ -24,7 +31,7 @@ class Movie
 	/** @Column(name="description", type="string") **/
 	protected $description;
 	
-	/** @Column(name="view_count", type="string") **/
+	/** @Column(name="view_count", type="integer") **/
 	protected $viewCount = 0;
 	
 	/** @Column(name="is_active", type="boolean", nullable=false) **/
@@ -46,19 +53,18 @@ class Movie
 	 */
 	protected $updatedDate;
 	
-
-	/** @Column(name="real_url", type="string") **/
+	/** @Column(name="real_url", type="string", columnDefinition="text") **/
 	protected $realUrl;
 	
 
-	/** @Column(name="processed_url", type="string") **/
+	/** @Column(name="processed_url", type="string", columnDefinition="text") **/
 	protected $processedUrl;
 	
 	
-	/** @Column(name="cover_url", type="string") **/
+	/** @Column(name="cover_url", type="string", columnDefinition="text") **/
 	protected $coverUrl;
 	
-	/** @Column(name="screen_shot_url", type="string") **/
+	/** @Column(name="screen_shot_url", type="string", columnDefinition="text") **/
 	protected $screenShotUrl;
 	
 	/**
@@ -69,6 +75,9 @@ class Movie
 	 * @JoinColumn(name="category_id", referencedColumnName="id")
 	 */
 	protected $category;
+	
+	
+	
 	public function getId() {
 		return $this->id;
 	}
@@ -171,6 +180,14 @@ class Movie
 	
 
 
+	/**
+	 * @PreUpdate
+	 * @PrePersist
+	 */
+	public function processUrl(){
+		$vids = VideoService::getInstance()->getRealVideo($this->getRealUrl());
+		$this->setProcessedUrl(serialize($vids));
+	}
 	
 	
 	

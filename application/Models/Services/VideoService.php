@@ -1,11 +1,25 @@
 <?php
 namespace Models\Services;
 
+use Models\Repositories\MovieRepository;
+use My\Factory\MyEntityManagerFactory;
 class VideoService{
 	private $_maxCap = 3000;
 	
 // 	protected function __construct();
 	protected static $instance = null;
+	
+	
+	/**
+	 * 
+	 * @var MovieRepository
+	 */
+	protected $_movieRepository;
+	
+	protected function __construct(){
+		$em = MyEntityManagerFactory::getEntityManager();
+		$this->_movieRepository = $em->getRepository('\Models\Entities\Movie');
+	}
 	
 	
 	/**
@@ -18,14 +32,16 @@ class VideoService{
         }
         return static::$instance;
     }
-	
+
+    
 	public function getRealVideo($url){
 		$sourceUrl = $url;
 		
-		preg_match('/photos\/([0-9]+)\//', $sourceUrl, $matches);
+		preg_match('/photos\\/([0-9]+)\\/albums\\/[0-9]+\\/([0-9]+)/', $sourceUrl, $matches);
 		$id = $matches[1];
-		preg_match('/pid=([0-9]+)/', $sourceUrl, $matches);
-		$pid = $matches[1];
+// 		preg_match('/pid=([0-9]+)/', $sourceUrl, $matches);
+// 		$pid = $matches[1];
+		$pid = $matches[2];
 		
 		
 		

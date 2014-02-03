@@ -1,12 +1,9 @@
 <?php
 
-use Models\Entities\Server;
 use My\Factory\MyEntityManagerFactory;
 use My\Manager\MyLayoutManager;
-use Models\Entities\Type;
 use Models\DataModels\SessionDataModel;
 use Models\Entities\Movie;
-use Models\Services\VideoService;
 use Models\Entities\Category;
 class ManageProcessorController extends Zend_Controller_Action
 {
@@ -143,10 +140,10 @@ class ManageProcessorController extends Zend_Controller_Action
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
 		$realUrl = $this->getRequest()->getPost('realUrl');
-		$vs = VideoService::getInstance();
-		$vids = $vs->getRealVideo($realUrl);
+// 		$vs = VideoService::getInstance();
+// 		$vids = $vs->getRealVideo($realUrl);
 		$movie->setRealUrl($realUrl);
-		$movie->setProcessedUrl(serialize($vids));
+// 		$movie->setProcessedUrl(serialize($vids));
 		
 		$currentDate = new DateTime();
 		$movie->setCreatedDate($currentDate);
@@ -176,10 +173,10 @@ class ManageProcessorController extends Zend_Controller_Action
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
 		$realUrl = $this->getRequest()->getPost('realUrl');
-		$vs = VideoService::getInstance();
-		$vids = $vs->getRealVideo($realUrl);
+// 		$vs = VideoService::getInstance();
+// 		$vids = $vs->getRealVideo($realUrl);
 		$movie->setRealUrl($realUrl);
-		$movie->setProcessedUrl(serialize($vids));
+// 		$movie->setProcessedUrl(serialize($vids));
 		
 		
 		$currentDate = new DateTime();

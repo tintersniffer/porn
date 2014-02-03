@@ -25,6 +25,7 @@ date_default_timezone_set('Asia/Bangkok');
 require_once 'Zend/Loader/Autoloader.php';
 $loader = \Zend_Loader_Autoloader::getInstance();
 $loader->registerNamespace('My\\');
+$loader->registerNamespace('Helper\\');
 $loader->registerNamespace("Doctrine\\");
 $loader->registerNamespace("Models\\");
 //setupAutoload();
@@ -50,15 +51,15 @@ $front = Zend_Controller_Front::getInstance()
  
 
 
-MyDatabaseConfiguration::$databaseHost = '127.0.0.1';
-MyDatabaseConfiguration::$databaseName = 'swim';
-MyDatabaseConfiguration::$databaseUserName = 'root';
-MyDatabaseConfiguration::$databasePassword = 'adminadmin';
+// MyDatabaseConfiguration::$databaseHost = '127.0.0.1';
+// MyDatabaseConfiguration::$databaseName = 'swim';
+// MyDatabaseConfiguration::$databaseUserName = 'root';
+// MyDatabaseConfiguration::$databasePassword = 'adminadmin';
 
 MyDatabaseConfiguration::$databaseHost = 'localhost'; 
 MyDatabaseConfiguration::$databaseName = 'mapz_porn';
 MyDatabaseConfiguration::$databaseUserName = 'mapz_dev';
-MyDatabaseConfiguration::$databasePassword = 'adminP@12w0rd';
+MyDatabaseConfiguration::$databasePassword = 'adminadmin';
 
 TransactionManager::start();
 
