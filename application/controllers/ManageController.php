@@ -47,7 +47,7 @@ class ManageController extends Zend_Controller_Action
     public function typesAction()
     {
         // action body
-        $this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findAll();
+        $this->view->types = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Category')->findBy(array('isActive'=>true),array('sortingOrder'=>'asc'));
 //         $this->view->servers = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Server')->findBy(array('isActive'=>true));
     }
 

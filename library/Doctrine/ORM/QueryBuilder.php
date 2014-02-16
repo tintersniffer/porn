@@ -187,7 +187,7 @@ class QueryBuilder
      * <code>
      *     $qb = $em->createQueryBuilder()
      *         ->select('u')
-     *         ->from('User', 'u')
+     *         ->from('User', 'u');
      *     echo $qb->getDql(); // SELECT u FROM User u
      * </code>
      *
@@ -283,12 +283,18 @@ class QueryBuilder
      * </code>
      *
      * @deprecated Please use $qb->getRootAliases() instead.
+     * @throws RuntimeException
      *
      * @return string
      */
     public function getRootAlias()
     {
         $aliases = $this->getRootAliases();
+
+        if ( ! isset($aliases[0])) {
+            throw new \RuntimeException('No alias was set before invoking getRootAlias().');
+        }
+
         return $aliases[0];
     }
 
@@ -655,7 +661,7 @@ class QueryBuilder
      * <code>
      *     $qb = $em->createQueryBuilder()
      *         ->delete('User', 'u')
-     *         ->where('u.id = :user_id');
+     *         ->where('u.id = :user_id')
      *         ->setParameter('user_id', 1);
      * </code>
      *
@@ -709,7 +715,7 @@ class QueryBuilder
      * <code>
      *     $qb = $em->createQueryBuilder()
      *         ->select('u')
-     *         ->from('User', 'u')
+     *         ->from('User', 'u');
      * </code>
      *
      * @param string $from    The class name.
@@ -894,8 +900,8 @@ class QueryBuilder
      */
     public function andWhere($where)
     {
-        $where = $this->getDQLPart('where');
         $args  = func_get_args();
+        $where = $this->getDQLPart('where');
 
         if ($where instanceof Expr\Andx) {
             $where->addMultiple($args);
@@ -927,8 +933,8 @@ class QueryBuilder
      */
     public function orWhere($where)
     {
-        $where = $this->getDqlPart('where');
         $args  = func_get_args();
+        $where = $this->getDqlPart('where');
 
         if ($where instanceof Expr\Orx) {
             $where->addMultiple($args);
@@ -967,8 +973,8 @@ class QueryBuilder
      *     $qb = $em->createQueryBuilder()
      *         ->select('u')
      *         ->from('User', 'u')
-     *         ->groupBy('u.lastLogin');
-     *         ->addGroupBy('u.createdAt')
+     *         ->groupBy('u.lastLogin')
+     *         ->addGroupBy('u.createdAt');
      * </code>
      *
      * @param string $groupBy The grouping expression.
@@ -1007,8 +1013,8 @@ class QueryBuilder
      */
     public function andHaving($having)
     {
-        $having = $this->getDqlPart('having');
         $args   = func_get_args();
+        $having = $this->getDqlPart('having');
 
         if ($having instanceof Expr\Andx) {
             $having->addMultiple($args);
@@ -1030,8 +1036,8 @@ class QueryBuilder
      */
     public function orHaving($having)
     {
-        $having = $this->getDqlPart('having');
         $args   = func_get_args();
+        $having = $this->getDqlPart('having');
 
         if ($having instanceof Expr\Orx) {
             $having->addMultiple($args);

@@ -3,6 +3,8 @@ namespace Models\Services;
 
 use Models\Repositories\MovieRepository;
 use My\Factory\MyEntityManagerFactory;
+use Models\Entities\MovieView;
+use Doctrine\ORM\EntityManager;
 class VideoService{
 	private $_maxCap = 3000;
 	
@@ -16,11 +18,27 @@ class VideoService{
 	 */
 	protected $_movieRepository;
 	
+	/**
+	 *
+	 * @var AbstractRepository
+	 */
+	protected $_movieViewRepository;
+	
+	/**
+	 * 
+	 * @var EntityManager
+	 */
+	protected  $_em;
+	
+	
+	protected $_updateViewCountRatio = 30;
+	
 	protected function __construct(){
 		$em = MyEntityManagerFactory::getEntityManager();
 		$this->_movieRepository = $em->getRepository('\Models\Entities\Movie');
-	}
-	
+		$this->_movieViewRepository =  $em->getRepository('\Models\Entities\MovieView');
+		$this->_em = $em;
+	}	
 	
 	/**
 	 * @return VideoService
@@ -33,14 +51,33 @@ class VideoService{
         return static::$instance;
     }
 
+    public function viewMovie($movieId){
+    	
+    	$movieView = $this->_movieViewRepository->findOneBy(array('id'=>$movieId));
+    	$movie = $this->_movieRepository->findOneBy(array('id'=>$movieId));
+    	
+    	if(!$movieView){
+    		$movieView = new MovieView();
+    		$movieView->setId($movie->getId());
+    		$movieView->setViewCount($movie->getViewCount());
+    		$this->_em->persist($movieView);
+    		$this->_em->flush($movieView);
+    		$this->_movieRepository->clear();
+    	}
+    	
+    	$movieView->setViewCount($movieView->getViewCount()+1);
+    	$rnd = rand(0, 100);
+    	
+    	if($rnd<$this->_updateViewCountRatio){
+    		$movie->setViewCount($movieView->getViewCount());
+    	}    	
+    }
     
 	public function getRealVideo($url){
 		$sourceUrl = $url;
 		
 		preg_match('/photos\\/([0-9]+)\\/albums\\/[0-9]+\\/([0-9]+)/', $sourceUrl, $matches);
 		$id = $matches[1];
-// 		preg_match('/pid=([0-9]+)/', $sourceUrl, $matches);
-// 		$pid = $matches[1];
 		$pid = $matches[2];
 		
 		
@@ -53,7 +90,7 @@ class VideoService{
 		$output = curl_exec($ch);
 		curl_close($ch);		
 		
-		$pattern = "/,\"\",\"5970595871311426930\",\\[\\][^<>]{{$this->_maxCap}}/s";
+		$pattern = "/,\"\",\"{$pid}\",\\[\\][^<>]{{$this->_maxCap}}/s";
 		preg_match($pattern, $output, $matches);
 		
 		$output = $matches[0];
@@ -65,10 +102,8 @@ class VideoService{
 		foreach ($matches[0] as $key=>$value){
 			$value = $this->_unescapeUTF8EscapeSeq($value);
 			$value = $this->_getRealUrl($value);
-// 			\Zend_Debug::dump($url);
 			$pattern = '/http:\/\/[a-zA-Z0-9-]+.googlevideo.com\/videoplayback\?id=[0-9a-zA-Z]+&itag=([0-9]+)/';
 			preg_match($pattern, $value, $ms);
-// 			\Zend_Debug::dump($ms);
 			$url = $value;
 			$itag = $ms[1];
 		
@@ -79,7 +114,8 @@ class VideoService{
 			}	
 			
 		}
-		\Zend_Debug::dump($result);
+		
+// 		\Zend_Debug::dump($result);
 		return $result;		
 	}
 	

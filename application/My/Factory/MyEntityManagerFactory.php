@@ -13,6 +13,7 @@ use My\Monitor\MySQLLogger;
 use My\Configs\MyDatabaseConfiguration;
 use My\Utils\MyCache;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\Common\Proxy\AbstractProxyFactory;
 
 class MyEntityManagerFactory{
 	
@@ -34,14 +35,11 @@ class MyEntityManagerFactory{
 			self::$em = self::createNewEntityManager();
 			
 			if(static::$isUpdateSchema){
-				$schemaTool = new SchemaTool(self::$em);
-				$classes = self::$em->getMetadataFactory()->getAllMetadata();
+// 				$schemaTool = new SchemaTool(self::$em);
+// 				$classes = self::$em->getMetadataFactory()->getAllMetadata();
 // 				$schemaTool->dropSchema($classes);
 // 				$schemaTool->createSchema($classes);	
-				$schemaTool->updateSchema($classes);
-
-				
-				
+// 				$schemaTool->updateSchema($classes);				
 			}
 			
 			
@@ -73,21 +71,32 @@ class MyEntityManagerFactory{
 	}
 	
 	private static function createNewEntityManager(){
-		$config = new Configuration();		
+		$config = new Configuration();	
 		
 		
 		$driverImpl = $config->newDefaultAnnotationDriver(APPLICATION_PATH.'/Models/Entities');
 		
 		$config->setMetadataDriverImpl($driverImpl);
-		$config->setAutoGenerateProxyClasses(true);
-		$config->setMetadataCacheImpl(MyCache::getInstance("_doctrine_metadata")->getCacheImplement());
-		$config->setQueryCacheImpl(MyCache::getInstance("_doctrine_query_cache")->getCacheImplement());
-		$config->setResultCacheImpl(MyCache::getInstance("_doctrine_result_cache")->getCacheImplement());
-		$config->setHydrationCacheImpl(MyCache::getInstance("_doctrine_hydration_cache")->getCacheImplement());
-		$config->setProxyDir(APPLICATION_PATH.'/Models/Proxies/__CG__/Models/Entities2');
-		$config->setProxyNamespace('Models\\Proxies\\');		
 		
-// 		$config->setSQLLogger(MySQLLogger::getInstance());
+// 		$config->setMetadataCacheImpl(MyCache::getInstance("_doctrine_metadata")->getCacheImplement());
+// 		$config->setQueryCacheImpl(MyCache::getInstance("_doctrine_query_cache")->getCacheImplement());
+// 		$config->setResultCacheImpl(MyCache::getInstance("_doctrine_result_cache")->getCacheImplement());
+// 		$config->setHydrationCacheImpl(MyCache::getInstance("_doctrine_hydration_cache")->getCacheImplement());
+		$config->setMetadataCacheImpl(MyCache::getInstance("_doctrine_cache")->getCacheImplement());
+		$config->setQueryCacheImpl(MyCache::getInstance("_doctrine_cache")->getCacheImplement());
+		$config->setResultCacheImpl(MyCache::getInstance("_doctrine_cache")->getCacheImplement());
+		$config->setHydrationCacheImpl(MyCache::getInstance("_doctrine_cache")->getCacheImplement());
+		
+		$config->setProxyDir(APPLICATION_PATH.'/Models/Proxies/__CG__/');
+// 		$config->setProxyDir(APPLICATION_PATH.'/Models/Proxies/__CG__/Models/Entities2');		
+		$config->setAutoGenerateProxyClasses(AbstractProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS);
+		$config->setProxyNamespace('Models\\Proxies\\');			
+		
+// 		\My\Doc	
+		$config->addCustomNumericFunction('RAND', 'My\Doctrine\DqlFunction\Rand');
+		
+		
+// 		$config->setSQLLogger(new MySQLLogger());
 			
 		$connectionParams = MyDatabaseConfiguration::getConnectionParam();		
 		$conn = DriverManager::getConnection($connectionParams);

@@ -708,6 +708,18 @@ class MappingException extends \Doctrine\ORM\ORMException
     }
 
     /**
+     * @param string $listenerName
+     * @param string $methodName
+     * @param string $className
+     *
+     * @return \Doctrine\ORM\Mapping\MappingException
+     */
+    public static function duplicateEntityListener($listenerName, $methodName, $className)
+    {
+        return new self(sprintf('Entity Listener "%s#%s()" in "%s" was already declared, but it must be declared only once.', $listenerName, $methodName, $className));
+    }
+
+    /**
      * @param string $className
      * @param string $annotation
      *
@@ -768,5 +780,13 @@ class MappingException extends \Doctrine\ORM\ORMException
         return new self(
             sprintf('Missing "sequenceName" attribute for sequence id generator definition on class "%s".', $className)
         );
+    }
+
+    public static function noEmbeddablesInEmbeddable($className)
+    {
+        return new self(sprintf(
+            "You embedded one or more embeddables in embeddable '%s', but this behavior is currently unsupported.",
+            $className
+        ));
     }
 }

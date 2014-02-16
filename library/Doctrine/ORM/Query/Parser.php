@@ -1049,7 +1049,7 @@ class Parser
      * Parses an arbitrary path expression and defers semantical validation
      * based on expected types.
      *
-     * PathExpression ::= IdentificationVariable "." identifier
+     * PathExpression ::= IdentificationVariable "." identifier [ ("." identifier)* ]
      *
      * @param integer $expectedTypes
      *
@@ -1065,6 +1065,12 @@ class Parser
             $this->match(Lexer::T_IDENTIFIER);
 
             $field = $this->lexer->token['value'];
+
+            while ($this->lexer->isNextToken(Lexer::T_DOT)) {
+                $this->match(Lexer::T_DOT);
+                $this->match(Lexer::T_IDENTIFIER);
+                $field .= '.'.$this->lexer->token['value'];
+            }
         }
 
         // Creating AST node
@@ -1878,7 +1884,7 @@ class Parser
             case ($lookahead === Lexer::T_OPEN_PARENTHESIS):
                 return $this->SimpleArithmeticExpression();
 
-            //this check must be done before checking for a filed path expression
+            // this check must be done before checking for a filed path expression
             case ($this->isFunction()):
                 $this->lexer->peek(); // "("
 
@@ -1896,7 +1902,7 @@ class Parser
                 }
 
                 break;
-            //it is no function, so it must be a field path
+            // it is no function, so it must be a field path
             case ($lookahead === Lexer::T_IDENTIFIER):
                 $this->lexer->peek(); // lookahead => '.'
                 $this->lexer->peek(); // lookahead => token after '.'
@@ -2431,7 +2437,7 @@ class Parser
 
             switch ($peek['value']) {
                 case '(':
-                    //Peeks beyond the matched closing parenthesis.
+                    // Peeks beyond the matched closing parenthesis.
                     $token = $this->peekBeyondClosingParenthesis(false);
 
                     if ($token['type'] === Lexer::T_NOT) {
@@ -2559,7 +2565,7 @@ class Parser
     /**
      * Literal ::= string | char | integer | float | boolean
      *
-     * @return string
+     * @return \Doctrine\ORM\Query\AST\Literal
      */
     public function Literal()
     {
@@ -2776,23 +2782,29 @@ class Parser
     }
 
     /**
-     * StringExpression ::= StringPrimary | "(" Subselect ")"
+     * StringExpression ::= StringPrimary | ResultVariable | "(" Subselect ")"
      *
      * @return \Doctrine\ORM\Query\AST\StringPrimary |
-     *         \Doctrine\ORM\Query\AST\Subselect
+     *         \Doctrine\ORM\Query\AST\Subselect |
+     *         string
      */
     public function StringExpression()
     {
-        if ($this->lexer->isNextToken(Lexer::T_OPEN_PARENTHESIS)) {
-            $peek = $this->lexer->glimpse();
+        $peek = $this->lexer->glimpse();
 
-            if ($peek['type'] === Lexer::T_SELECT) {
-                $this->match(Lexer::T_OPEN_PARENTHESIS);
-                $expr = $this->Subselect();
-                $this->match(Lexer::T_CLOSE_PARENTHESIS);
+        // Subselect
+        if ($this->lexer->isNextToken(Lexer::T_OPEN_PARENTHESIS) && $peek['type'] === Lexer::T_SELECT) {
+            $this->match(Lexer::T_OPEN_PARENTHESIS);
+            $expr = $this->Subselect();
+            $this->match(Lexer::T_CLOSE_PARENTHESIS);
 
-                return $expr;
-            }
+            return $expr;
+        }
+
+        // ResultVariable (string)
+        if ($this->lexer->isNextToken(Lexer::T_IDENTIFIER) &&
+            isset($this->queryComponents[$this->lexer->lookahead['value']]['resultVariable'])) {
+            return $this->ResultVariable();
         }
 
         return $this->StringPrimary();
@@ -3115,7 +3127,7 @@ class Parser
     }
 
     /**
-     * NullComparisonExpression ::= (InputParameter | NullIfExpression | CoalesceExpression | SingleValuedPathExpression) "IS" ["NOT"] "NULL"
+     * NullComparisonExpression ::= (InputParameter | NullIfExpression | CoalesceExpression | SingleValuedPathExpression | ResultVariable) "IS" ["NOT"] "NULL"
      *
      * @return \Doctrine\ORM\Query\AST\NullComparisonExpression
      */
@@ -3141,7 +3153,29 @@ class Parser
                 break;
 
             default:
-                $expr = $this->SingleValuedPathExpression();
+                // We need to check if we are in a IdentificationVariable or SingleValuedPathExpression
+                $glimpse = $this->lexer->glimpse();
+
+                if ($glimpse['type'] === Lexer::T_DOT) {
+                    $expr = $this->SingleValuedPathExpression();
+
+                    // Leave switch statement
+                    break;
+                }
+
+                $lookaheadValue = $this->lexer->lookahead['value'];
+
+                // Validate existing component
+                if ( ! isset($this->queryComponents[$lookaheadValue])) {
+                    $this->semanticalError('Cannot add having condition on undefined result variable.');
+                }
+
+                // Validating ResultVariable
+                if ( ! isset($this->queryComponents[$lookaheadValue]['resultVariable'])) {
+                    $this->semanticalError('Cannot add having condition on a non result variable.');
+                }
+
+                $expr = $this->ResultVariable();
                 break;
         }
 

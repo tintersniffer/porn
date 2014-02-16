@@ -9,18 +9,20 @@ use Models\Services\VideoService;
  * @Entity(readOnly=false, repositoryClass="\Models\Repositories\MovieRepository")
  * @Table(name="movies", indexes=
  * {
- *    @index(name="category_idx", columns={"category_id"})
+ *    @index(name="category_idx", columns={"category_id"}),
+ *    @index(name="search_keyword_idx", columns={"movie_name"})
  * })
  * @HasLifecycleCallbacks
  */
 class Movie
 {
 	
-	
     /** @Id
 	 * @Column(name="id", type="integer")
 	 * @GeneratedValue(strategy="IDENTITY") **/
 	protected $id;
+	
+	protected $isProcessUrl = false;
 	
 	/** @Column(name="movie_name", type="string") **/
 	protected $movieName;
@@ -176,7 +178,13 @@ class Movie
 		$this->category = $category;
 		return $this;
 	}
-	
+	public function getIsProcessUrl() {
+		return $this->isProcessUrl;
+	}
+	public function setIsProcessUrl($isProcessUrl) {
+		$this->isProcessUrl = $isProcessUrl;
+		return $this;
+	}
 	
 
 
@@ -185,10 +193,14 @@ class Movie
 	 * @PrePersist
 	 */
 	public function processUrl(){
-		$vids = VideoService::getInstance()->getRealVideo($this->getRealUrl());
-		$this->setProcessedUrl(serialize($vids));
+		if($this->isProcessUrl){
+			$vids = VideoService::getInstance()->getRealVideo($this->getRealUrl());
+			$this->setProcessedUrl(serialize($vids));
+		}		
 	}
 	
+	
+
 	
 	
 }

@@ -1,6 +1,8 @@
 <?php
 
 use My\Factory\MyEntityManagerFactory;
+use Models\Services\VideoService;
+use Doctrine\Common\Collections\ArrayCollection;
 class WatchController extends Zend_Controller_Action
 {
 
@@ -12,9 +14,14 @@ class WatchController extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
+        /* @var $repo \Models\Repositories\MovieRepository */
         $repo = MyEntityManagerFactory::getEntityManager()->getRepository('\Models\Entities\Movie');
         $this->view->movie = $repo->find($this->getParam('id'));
-//         Zend_Debug::dump($this->view->movie);
+        if($this->view->movie){
+        	VideoService::getInstance()->viewMovie($this->getParam('id'));
+        	$this->view->relatedMovies = $repo->__findRandomRelatedMovies($this->getParam('id'));
+        }
+        $repo->clear();
     }
 
 

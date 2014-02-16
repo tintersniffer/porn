@@ -22,6 +22,8 @@ class MovieView
 	
 	/** @Column(name="view_count", type="integer") **/
 	protected $viewCount;
+	
+	
 	public function getId() {
 		return $this->id;
 	}

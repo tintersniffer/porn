@@ -202,9 +202,7 @@ class EntityGenerator
 '<?php
 
 <namespace>
-
-use Doctrine\ORM\Mapping as ORM;
-
+<useStatement>
 <entityAnnotation>
 <entityClassName>
 {
@@ -234,6 +232,7 @@ public function <methodName>()
  * <description>
  *
  * @param <variableType>$<variableName>
+ *
  * @return <entity>
  */
 public function <methodName>(<methodTypeHint>$<variableName><variableDefault>)
@@ -251,6 +250,7 @@ public function <methodName>(<methodTypeHint>$<variableName><variableDefault>)
  * <description>
  *
  * @param <variableType>$<variableName>
+ *
  * @return <entity>
  */
 public function <methodName>(<methodTypeHint>$<variableName>)
@@ -378,6 +378,7 @@ public function __construct()
     {
         $placeHolders = array(
             '<namespace>',
+            '<useStatement>',
             '<entityAnnotation>',
             '<entityClassName>',
             '<entityBody>'
@@ -385,12 +386,13 @@ public function __construct()
 
         $replacements = array(
             $this->generateEntityNamespace($metadata),
+            $this->generateEntityUse(),
             $this->generateEntityDocBlock($metadata),
             $this->generateEntityClassName($metadata),
             $this->generateEntityBody($metadata)
         );
 
-        $code = str_replace($placeHolders, $replacements, self::$classTemplate);
+        $code = str_replace($placeHolders, $replacements, static::$classTemplate) . "\n";
 
         return str_replace('<spaces>', $this->spaces, $code);
     }
@@ -411,7 +413,7 @@ public function __construct()
         $body = str_replace('<spaces>', $this->spaces, $body);
         $last = strrpos($currentCode, '}');
 
-        return substr($currentCode, 0, $last) . $body . (strlen($body) > 0 ? "\n" : ''). "}\n";
+        return substr($currentCode, 0, $last) . $body . (strlen($body) > 0 ? "\n" : '') . "}\n";
     }
 
     /**
@@ -474,7 +476,7 @@ public function __construct()
      */
     public function setFieldVisibility($visibility)
     {
-        if ($visibility !== self::FIELD_VISIBLE_PRIVATE && $visibility !== self::FIELD_VISIBLE_PROTECTED) {
+        if ($visibility !== static::FIELD_VISIBLE_PRIVATE && $visibility !== static::FIELD_VISIBLE_PROTECTED) {
             throw new \InvalidArgumentException('Invalid provided visibility (only private and protected are allowed): ' . $visibility);
         }
 
@@ -566,6 +568,15 @@ public function __construct()
             return 'namespace ' . $this->getNamespace($metadata) .';';
         }
     }
+    
+    protected function generateEntityUse()
+    {
+        if ($this->generateAnnotations) {
+            return "\n".'use Doctrine\ORM\Mapping as ORM;'."\n";
+        } else {
+            return "";
+        }
+    }
 
     /**
      * @param ClassMetadataInfo $metadata
@@ -633,7 +644,7 @@ public function __construct()
         }
 
         if ($collections) {
-            return $this->prefixCodeWithSpaces(str_replace("<collections>", implode("\n".$this->spaces, $collections), self::$constructorMethodTemplate));
+            return $this->prefixCodeWithSpaces(str_replace("<collections>", implode("\n".$this->spaces, $collections), static::$constructorMethodTemplate));
         }
 
         return '';
@@ -709,6 +720,13 @@ public function __construct()
             }
         }
 
+        // check traits for existing property
+        foreach ($this->getTraits($metadata) as $trait) {
+            if ($trait->hasProperty($property)) {
+                return true;
+            }
+        }
+
         return (
             isset($this->staticReflection[$metadata->name]) &&
             in_array($property, $this->staticReflection[$metadata->name]['properties'])
@@ -732,10 +750,43 @@ public function __construct()
             }
         }
 
+        // check traits for existing method
+        foreach ($this->getTraits($metadata) as $trait) {
+            if ($trait->hasMethod($method)) {
+                return true;
+            }
+        }
+
         return (
             isset($this->staticReflection[$metadata->name]) &&
             in_array($method, $this->staticReflection[$metadata->name]['methods'])
         );
+    }
+
+    /**
+     * @param ClassMetadataInfo $metadata
+     *
+     * @return array
+     */
+    protected function getTraits(ClassMetadataInfo $metadata)
+    {
+        if (PHP_VERSION_ID >= 50400 && ($metadata->reflClass !== null || class_exists($metadata->name))) {
+            $reflClass = $metadata->reflClass === null
+                ? new \ReflectionClass($metadata->name)
+                : $metadata->reflClass;
+
+            $traits = array();
+
+            while ($reflClass !== false) {
+                $traits = array_merge($traits, $reflClass->getTraits());
+
+                $reflClass = $reflClass->getParentClass();
+            }
+
+            return $traits;
+        }
+
+        return array();
     }
 
     /**
@@ -1102,7 +1153,7 @@ public function __construct()
         $this->staticReflection[$metadata->name]['methods'][] = $methodName;
 
         $var = sprintf('%sMethodTemplate', $type);
-        $template = self::$$var;
+        $template = static::$$var;
 
         $methodTypeHint = null;
         $types          = Type::getTypesMap();
@@ -1155,7 +1206,7 @@ public function __construct()
         $method = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            self::$lifecycleCallbackMethodTemplate
+            static::$lifecycleCallbackMethodTemplate
         );
 
         return $this->prefixCodeWithSpaces($method);
@@ -1388,7 +1439,11 @@ public function __construct()
             if (isset($fieldMapping['nullable'])) {
                 $column[] = 'nullable=' .  var_export($fieldMapping['nullable'], true);
             }
-
+            
+            if (isset($fieldMapping['unsigned']) && $fieldMapping['unsigned']) {
+                $column[] = 'options={"unsigned"=true}';
+            }
+            
             if (isset($fieldMapping['columnDefinition'])) {
                 $column[] = 'columnDefinition="' . $fieldMapping['columnDefinition'] . '"';
             }
@@ -1459,15 +1514,15 @@ public function __construct()
      *
      * @return string The literal string for the inheritance type.
      *
-     * @throws \InvalidArgumentException When the inheritance type does not exists.
+     * @throws \InvalidArgumentException When the inheritance type does not exist.
      */
     protected function getInheritanceTypeString($type)
     {
-        if ( ! isset(self::$inheritanceTypeMap[$type])) {
+        if ( ! isset(static::$inheritanceTypeMap[$type])) {
             throw new \InvalidArgumentException(sprintf('Invalid provided InheritanceType: %s', $type));
         }
 
-        return self::$inheritanceTypeMap[$type];
+        return static::$inheritanceTypeMap[$type];
     }
 
     /**
@@ -1475,15 +1530,15 @@ public function __construct()
      *
      * @return string The literal string for the change-tracking type.
      *
-     * @throws \InvalidArgumentException When the change-tracking type does not exists.
+     * @throws \InvalidArgumentException When the change-tracking type does not exist.
      */
     protected function getChangeTrackingPolicyString($type)
     {
-        if ( ! isset(self::$changeTrackingPolicyMap[$type])) {
+        if ( ! isset(static::$changeTrackingPolicyMap[$type])) {
             throw new \InvalidArgumentException(sprintf('Invalid provided ChangeTrackingPolicy: %s', $type));
         }
 
-        return self::$changeTrackingPolicyMap[$type];
+        return static::$changeTrackingPolicyMap[$type];
     }
 
     /**
@@ -1491,14 +1546,14 @@ public function __construct()
      *
      * @return string The literal string for the generator type.
      *
-     * @throws \InvalidArgumentException    When the generator type does not exists.
+     * @throws \InvalidArgumentException    When the generator type does not exist.
      */
     protected function getIdGeneratorTypeString($type)
     {
-        if ( ! isset(self::$generatorStrategyMap[$type])) {
+        if ( ! isset(static::$generatorStrategyMap[$type])) {
             throw new \InvalidArgumentException(sprintf('Invalid provided IdGeneratorType: %s', $type));
         }
 
-        return self::$generatorStrategyMap[$type];
+        return static::$generatorStrategyMap[$type];
     }
 }

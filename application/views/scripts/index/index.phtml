@@ -1,11 +1,12 @@
 <?php 
 	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+	$this->width = "32%;"
 ?>
 
 <section>
 <h4 style="margin-bottom: 20px;margin-top: 20px;">NEW VIDEOS - This page is updated everyday with new pron videos!</h4>
 <div class="row" style="margin-bottom: 30px;">
-	<div class="col-xs-9" style="">
+	<div class="col-lg-9" style="">
 	
 		<?php 
 		
@@ -14,17 +15,15 @@
 // 			$cover = $movie->getCover() ? "$baseUrl/uploaded-images/{$movie->getCover()->getRealKey()}": "$baseUrl/images/no-cover.jpg";
 			$cover = $movie->getCoverUrl();
 			?>
-			
-		<div class="movie movie-thumbnail">			
+			<a href="<?php echo "$baseUrl/watch/{$movie->getId()}/{$movie->getFriendlyName()}"?>" style="display: block;">
+		<div class="movie movie-thumbnail" style="width:<?php echo $this->width?>%">			
 			<img src="<?php echo "$cover"?>" 
-			alt="Cover image of <?php echo $movie->getMovieName()?>" class="img-thumbnail" style="width: 98%;">
-			<p style="padding: 5px 10px;">
-				<a href="<?php echo "$baseUrl/watch/{$movie->getId()}/{$movie->getFriendlyName()}"?>">
-					<?php echo $movie->getMovieName()?>
-				</a>
+			alt="Cover image of <?php echo $movie->getMovieName()?>" class="img-thumbnail" style="/* width: 98%; */ width: 219px; height: 150px;">
+			<p style="padding: 5px 10px;">				
+					<?php echo $movie->getMovieName()?>				
 			</p>
 		</div>
-			
+			</a>
 			<?php 	
 			endforeach;
 		?>
@@ -33,13 +32,17 @@
 		<?php $this->navigation->render();?>
 		</div>
 		
+	</div>
+	<div class="col-lg-3">
+		<div style="clear:both; width: 120%; position: relative; margin-left: -40px;">
+				<?php include 'ad1.php';?>
+		</div>
+	</div>
+	
+	<div class="col-lg-12" style="margin-top: 20px;">		
 		<div style="clear:both; width: 100%; position: relative;">
 			<?php include 'ad2.php';?>
 		</div>
-		
-	</div>
-	<div class="col-xs-3">
-		<?php include 'ad1.php';?>
 	</div>
 </div>
 

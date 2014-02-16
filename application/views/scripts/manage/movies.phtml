@@ -7,7 +7,7 @@
 </div>
 
 <br />
-<table class="table table-bordered table-condense">
+<table class="table table-bordered table-condense" id="table">
 	<thead>
 		<tr>
 			<th width="20%">Movie Name</th>
@@ -39,3 +39,8 @@
 	?>
 	</tbody>
 </table>
+<script>
+	addDocumentReady(function(){
+		$('#table').dataTable();
+	});
+</script>

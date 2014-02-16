@@ -11,7 +11,7 @@ use Doctrine\Common\Cache\CacheProvider;
 
 class MyCache implements Cache {
 	
-	private static $TYPE_PREFER_DEFAULT = 0; // 0 mean don't use this prefer
+	private static $TYPE_PREFER_DEFAULT = 4; // 0 mean don't use this prefer
 	private static $TYPE_DEFAULT = 1;
 	public static $TYPE_ARRAY = 1;
 	public static $TYPE_APC = 2;

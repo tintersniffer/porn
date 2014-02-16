@@ -1,5 +1,4 @@
 <?php
-
 use My\Factory\MyEntityManagerFactory;
 use My\Manager\MyLayoutManager;
 use Models\DataModels\SessionDataModel;
@@ -140,8 +139,7 @@ class ManageProcessorController extends Zend_Controller_Action
 		$category =  MyEntityManagerFactory::getEntityManager()->getRepository('\\Models\\Entities\\Category')->find($this->getRequest()->getPost('category'));
 		$movie->setCategory($category);
 		$realUrl = $this->getRequest()->getPost('realUrl');
-// 		$vs = VideoService::getInstance();
-// 		$vids = $vs->getRealVideo($realUrl);
+		$movie->setIsProcessUrl(true);
 		$movie->setRealUrl($realUrl);
 // 		$movie->setProcessedUrl(serialize($vids));
 		
@@ -175,6 +173,7 @@ class ManageProcessorController extends Zend_Controller_Action
 		$realUrl = $this->getRequest()->getPost('realUrl');
 // 		$vs = VideoService::getInstance();
 // 		$vids = $vs->getRealVideo($realUrl);
+		$movie->setIsProcessUrl(true);
 		$movie->setRealUrl($realUrl);
 // 		$movie->setProcessedUrl(serialize($vids));
 		
