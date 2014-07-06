@@ -32,6 +32,10 @@ body {
   width: 970px;
 }
 
+window,html,body{
+	min-width: 970px;
+}
+
 /* Demonstrate the grids */
 .col-xs-4 {
   padding-top: 15px;

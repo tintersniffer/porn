@@ -70,7 +70,24 @@ class VideoService{
     	
     	if($rnd<$this->_updateViewCountRatio){
     		$movie->setViewCount($movieView->getViewCount());
-    	}    	
+    	} 
+
+    	$this->_updateMovieUrl($movieId, $rnd);
+    }
+    
+    private function _updateMovieUrl($movieId, $rnd){
+    	/* @var $movie \Models\Entities\Movie  */
+    	$movie = $this->_movieRepository->findOneBy(array('id'=>$movieId));
+    	$cd = new \DateTime();
+    	$d = intval($cd->diff($movie->getUpdatedDate(), true)->format('%d'));
+    	
+    	if($d>3){
+    		$movie->setProcessedUrl($this->getRealVideo($movie->getRealUrl()));
+    		$movie->setUpdatedDate($cd);
+    	}else if($d>1 && $rnd<$this->_updateViewCountRatio){
+    		$movie->setProcessedUrl($this->getRealVideo($movie->getRealUrl()));
+    		$movie->setUpdatedDate($cd);
+    	}
     }
     
 	public function getRealVideo($url){

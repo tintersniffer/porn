@@ -7,19 +7,50 @@ use \Doctrine\Common\Collections\ArrayCollection;
 	$movie = $this->movie;
 // 	$cover = $movie->getCover() ? "$baseUrl/uploaded-images/{$movie->getCover()->getRealKey()}": "$baseUrl/images/no-cover.jpg";
 	$cover = $movie->getCoverUrl();
-	$vids = unserialize($movie->getProcessedUrl());
-	
-	$remoteAddr = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');
+// 	$vids = VideoService::getInstance()->getRealVideo($movie->getRealUrl());
+	$vids = $movie->getProcessedUrl();	
+	//$remoteAddr = Zend_Controller_Front::getInstance()->getRequest()->getServer('REMOTE_ADDR');
 ?>
+<style>
+	#vid-container .btn-primary {
+		background-image: -webkit-linear-gradient(top, #428bca 0%, #2d6ca2 100%);
+	background-image: linear-gradient(to bottom, rgba(66,139,202,0.5) 0%, rgba(45,108,162,0.5) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-repeat: repeat-x;
+	border-color: #2b669a;
+	background-color: transparent;
+}
 
+#vid-container .btn-primary:HOVER {
+		background-image: -webkit-linear-gradient(top, #428bca 0%, #2d6ca2 100%);
+	background-image: linear-gradient(to bottom, rgba(66,139,202,0.85) 0%, rgba(45,108,162,0.85) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-repeat: repeat;
+	border-color: #2b669a;
+	background-color: transparent;
+	text-decoration: none;
+	outline: none;
+}
+	
+.vjs-default-skin .vjs-big-play-button {
+	/* display: none; */
+}
+.vjs-default-skin .vjs-big-play-button {
+	font-size: 4em;
+}
+
+</style>
 <section>
 	<!-- 
 	<h4 style="margin-bottom: 20px; margin-top: 20px;">NEW VIDEOS - This
 		page is updated everyday with new pron videos!</h4>-->
 	
 	<div class="row" style="margin-bottom: 30px; margin-top: 30px;">
-		<div class="col-lg-9" style="">
+		<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="">
 			<div style="margin-left: 15px;">
+			<div id="vid-container">
 			<video id="main-vid" class="video-js vjs-default-skin"
 				controls preload="auto" width="640" height="360"
 				poster="<?php echo $cover?>"
@@ -27,7 +58,7 @@ use \Doctrine\Common\Collections\ArrayCollection;
 				<?php 
 				$default = 'data-default="true"';
 				foreach ($vids as $res=>$vid):
-					$vid = preg_replace('/[0-9]{1,3}[\.]{1}[0-9]{1,3}[\.]{1}[0-9]{1,3}[\.]{1}[0-9]{1,3}/', $remoteAddr, $vid);
+					//$vid = preg_replace('/[0-9]{1,3}[\.]{1}[0-9]{1,3}[\.]{1}[0-9]{1,3}[\.]{1}[0-9]{1,3}/', $remoteAddr, $vid);
 				?>
 					<source data-res="<?php echo $res?>" src="<?php echo $vid;?>"
 					type="video/mp4" <?php echo $default;?> />
@@ -36,21 +67,33 @@ use \Doctrine\Common\Collections\ArrayCollection;
 				$default = '';
 				endforeach;?>
 			</video>
+			<div style="position: absolute; z-index: 1000; top: 0px; right : 70px; top: 15px;" >
+				<a href="javascript:void(0)" class="btn btn-lg btn-primary" onclick="play720();" style="padding: 20px 30px;">
+					<span class="glyphicon glyphicon-play"></span> Play LD 720P Video
+				</a>
+				
+				<br /><br />
+				<a href="javascript:void(0)" class="btn btn-lg btn-primary" onclick="play360();" style="padding: 20px 30px;">
+					<span class="glyphicon glyphicon-play"></span> Play HD 360P Video
+				</a>
+			</div>
+			</div>
 			<div style="float: left;">
 			<h3 style=""><?php echo $movie->getMovieName();?></h3>
 			<p style="font-size: 14px; font-weight: bold; margin-top: 15px;">จำนวนผู้เข้าชม: <?php echo $movie->getViewCount()?></p>
 			
 			</div>
-			<div style="float: right; margin-right: 40px;"> 
-				<!-- 
-				<a href="javascript:void(0)" class="btn btn-default" onclick="play360();">
-					LD 360P
-				</a>
-				<br />
-				<a href="javascript:void(0)" class="btn btn-default" onclick="play720();">
+			<div style="float: right; margin-right: 40px; margin-top: 5px; display: block;"> 
+				<p style="margin-bottom: 5px; font-weight: bold;">Video Quality:</p>
+				<a href="javascript:void(0)" class="btn btn-primary" onclick="play720();"  id="btn-720">
 					HD 720P
 				</a>
-				 -->
+					<br />
+				<a href="javascript:void(0)" class="btn btn-primary" onclick="play360();" id="btn-360" style="margin-top: 3px;">
+					LD 360P
+				</a>
+			
+				
 			</div>
 			
 			<div style="clear:both;"></div>
@@ -133,13 +176,13 @@ use \Doctrine\Common\Collections\ArrayCollection;
 		
 		
 		</div>
-		<div class="col-lg-3">
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 		<div style="clear:both; width: 120%; position: relative; margin-left: -40px;">
 				<?php include 'ad1.php';?>
 		</div>
 		</div>
 		
-		<div class="col-lg-12">		
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">		
 		<div style="clear:both; width: 100%; position: relative; margin-top: 30px;">
 			<?php include 'ad2.php';?>
 		</div>
@@ -162,10 +205,9 @@ use \Doctrine\Common\Collections\ArrayCollection;
 		
 		vjs('main-vid', {
 	        plugins: {
-	          resolutions: true
+ 	         	resolutions: true 
 	        }
 	    });
-	    console.log(xxx);
 
 
 	    $('.movie img').hover(function(){
@@ -180,26 +222,73 @@ use \Doctrine\Common\Collections\ArrayCollection;
 
 	var v360 = "";
 	var v720 = "";
-	function prepareSrc(){
+	function prepareSrc(){		
 		v360 = $('#main-vid source[data-res="360"]').attr('src');
 		v720 = $('#main-vid source[data-res="720"]').attr('src');
 	}
 
+	var ctime = 0;
 	function play360(){
 		var vid = $('#main-vid_html5_api')[0];
 		vid.pause();
-		var ctime = vid.currentTime;
+		ctime = vid.currentTime;
 		$(vid).attr('src',v360);
-		vid.currentTime = ctime;
-		vid.play();		
+		
+		vid.play();	
+		vid.addEventListener("canplay",function() { vid.currentTime = ctime;});
+
+
+		$('#vid-container a.btn-lg').css('display','none');
+		if($('#btn-720').hasClass('disabled')){
+			$('#btn-720').removeClass('disabled');			
+		}
+		if(! $('#btn-360').hasClass('disabled')){
+			$('#btn-360').addClass('disabled');
+			
+		}
+		$('#btn-720').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HD 720P');
+		$('#btn-360').html('<span class="glyphicon glyphicon-ok"></span> &nbsp;LD 360P');
+
+		var l2 = $($('.vjs-resolutions-button .vjs-menu-content li')[0]);
+		var l1 = $($('.vjs-resolutions-button .vjs-menu-content li')[1]);
+		if(l1.hasClass('vjs-selected')){
+			l1.removeClass('vjs-selected');
+		}
+		if(! l2.hasClass('vjs-selected')){
+			l2.addClass('vjs-selected');
+		}
 	}
 
 	function play720(){
 		var vid = $('#main-vid_html5_api')[0];
 		vid.pause();
-		var ctime = vid.currentTime;
+		ctime = vid.currentTime;
 		$(vid).attr('src',v720);
-		vid.currentTime = ctime;
-		vid.play();				
+		vid.play();	
+		vid.addEventListener("canplay",function() { vid.currentTime = ctime;});
+
+		$('#vid-container a.btn-lg').css('display','none');
+
+		$('#vid-container a.btn-lg').css('display','none');
+		if($('#btn-360').hasClass('disabled')){
+			$('#btn-360').removeClass('disabled');
+		}
+		if(! $('#btn-720').hasClass('disabled')){
+			$('#btn-720').addClass('disabled');
+		}
+		$('#btn-360').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LD 360P');
+		$('#btn-720').html('<span class="glyphicon glyphicon-ok"></span> &nbsp;HD 720P');
+
+
+		var l1 = $($('.vjs-resolutions-button .vjs-menu-content li')[0]);
+		var l2 = $($('.vjs-resolutions-button .vjs-menu-content li')[1]);
+		if(l1.hasClass('vjs-selected')){
+			l1.removeClass('vjs-selected');
+		}
+		if(! l2.hasClass('vjs-selected')){
+			l2.addClass('vjs-selected');
+		}
+
+		
 	}
 </script>

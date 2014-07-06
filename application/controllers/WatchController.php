@@ -22,8 +22,7 @@ class WatchController extends Zend_Controller_Action
         	$this->view->relatedMovies = $repo->__findRandomRelatedMovies($this->getParam('id'));
         }
         $repo->clear();
-    }
-
+    }    
 
 }
 

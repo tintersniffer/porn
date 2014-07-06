@@ -59,7 +59,7 @@ class Movie
 	protected $realUrl;
 	
 
-	/** @Column(name="processed_url", type="string", columnDefinition="text") **/
+	/** @Column(name="processed_url", type="array", columnDefinition="text") **/
 	protected $processedUrl;
 	
 	
@@ -195,7 +195,7 @@ class Movie
 	public function processUrl(){
 		if($this->isProcessUrl){
 			$vids = VideoService::getInstance()->getRealVideo($this->getRealUrl());
-			$this->setProcessedUrl(serialize($vids));
+			$this->setProcessedUrl($vids);
 		}		
 	}
 	
